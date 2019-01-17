@@ -31,6 +31,9 @@ function setupExternalScript() {
 				});
 				window.dispatchEvent(updateEvent)
 			}
+			else if (type === "__annotations_restored_renderer_urlclick") {
+				window.location.href = data.url;
+			}
 		});
 	`;
 
@@ -116,7 +119,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			const annotations = annotationParser.parseYoutubeFormat(annotationElements);
 
 			const videoContainer = document.getElementById("movie_player");
-			renderer = new AnnotationRenderer(annotations, videoContainer, videoContainer);
+			renderer = new AnnotationRenderer(annotations, videoContainer, "https://www.youtube.com/");
 			renderer.start();
 		}
 	}

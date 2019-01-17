@@ -1,11 +1,12 @@
 class AnnotationRenderer {
-	constructor(annotations, video, container, updateInterval = 1000) {
-		if (!annotations) throw new Error("Annotation Objects must be provided");
-		if (!video) throw new Error("A Video must be provided");
-		if (!container) throw new Error("An Annotation Container must be provided");
+	constructor(annotations, container, postMessageOrigin, updateInterval = 1000) {
+		if (!annotations) throw new Error("Annotation objects must be provided");
+		if (!container) throw new Error("An element to contain the annotations must be provided");
+		if (!postMessageOrigin) throw new Error("A postMessageOrigin must be provided");
+
 		this.annotations = annotations;
-		this.video = video;
 		this.container = container;
+		this.postMessageOrigin = postMessageOrigin;
 
 		this.annotationsContainer = document.createElement("div");
 		this.annotationsContainer.classList.add("__cxt-ar-annotations-container__");
@@ -63,10 +64,10 @@ class AnnotationRenderer {
 		}
 	}
 	start() {
-		window.postMessage({type: "__annotations_restored_renderer_start", updateInterval: this.updateInterval}, "https://www.youtube.com");
+		window.postMessage({type: "__annotations_restored_renderer_start", updateInterval: this.updateInterval}, this.postMessageOrigin);
 	}
 	stop() {
-		window.postMessage({type: "__annotations_restored_renderer_stop"}, "https://www.youtube.com");
+		window.postMessage({type: "__annotations_restored_renderer_stop"}, this.postMessageOrigin);
 	}
 
 	annotationClickHandler(e) {
@@ -80,12 +81,12 @@ class AnnotationRenderer {
 			this.setVideoTime(seconds);
 		}
 		else if (annotationData.actionType === "url") {
-			window.location.href = annotationData.actionUrl;
+			window.postMessage({type: "__annotations_restored_renderer_urlclick", url: annotationData.actionUrl});
 		}
 	}
 
 	setVideoTime(seconds) {
-		window.postMessage({type: "__annotations_restored_renderer_seek_to", seconds}, "https://www.youtube.com");
+		window.postMessage({type: "__annotations_restored_renderer_seek_to", seconds}, this.postMessageOrigin);
 	}
 
 	setUpdateInterval(ms) {
