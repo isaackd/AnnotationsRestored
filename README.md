@@ -2,7 +2,7 @@
 **[Brings annotation support back to YouTube](https://github.com/afrmtbl/AnnotationsRestored/blob/master/demo.gif)**
 
 
-\**Currently only works with the [custom [ar_start]...[ar_end] format](https://imgur.com/1ubx6B8) in the description of a YouTube video until the [archival efforts](https://www.reddit.com/r/DataHoarder/comments/aa6czg/youtube_annotation_archive/) of [/u/omarroth](https://www.reddit.com/user/omarroth) make it into an API. In the meantime, for older videos, you can [place the converted annotation data into the description of your video](#restoring-annotations-on-old-videos)*
+\**Currently only works with the [custom [ar_start]...[ar_end] format](#restoring-annotations-on-old-videos) in the description of a YouTube video until the [archival efforts](https://www.reddit.com/r/DataHoarder/comments/aa6czg/youtube_annotation_archive/) of [/u/omarroth](https://www.reddit.com/user/omarroth) make it into an API. In the meantime, for older videos, you can [place the converted annotation data into the description of your video](#restoring-annotations-on-old-videos) - ([example](https://imgur.com/1ubx6B8))*
 
 On January 15 2019, YouTube decided to discontinue annotations. While the feature was frequently abused, it did have many legitimate use cases, such as games, corrections, and a form of commentary that could be toggled on and off. The removal left many older videos obsolete. **Annotations Restored** aims to fix this.
 
