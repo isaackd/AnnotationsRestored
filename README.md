@@ -29,3 +29,21 @@ If you don't have access to the annotation data for your videos, you will need t
 
 ## Adding annotations to new videos
 As I currently don't have access to a server to store new annotation data, it must be put into the video's description as described above, although **you will have to manually create the data in the extension's format**. If there is enough interest, an annotation creator can be made.
+
+## Documentation of the Annotations Restored format
+Annotations Restored uses a different format than YouTube used for annotations. The Annotations Restored format is generally more compact than the YouTube annotations format.
+
+Each videos annotations consist of a list of annotations. Annotations are separated by the `;` character, with no spaces. Each annotation consists of a set of properties, separated by the `,` character, also with no spaces. Between each property and value is a `=` symbol. The properties for annotations are the following:
+#### Required Properties
+* `x`: the x coordinate of the annotation in percent of the width of the video.
+* `y`: the y coordinate of the annotation in percent of the height of the video.
+* `w`: the width of the annotation in percent of the width of the video.
+* `h`: the height of the annotation in percent of the height of the video.
+* `ts`: the start of the time the annotation is displayed on screen in seconds.
+* `te`: the end of the time the annotation is displayed on screen in seconds.
+* `tp`: the type of the annotation. Possible values include `text` and `pause`.
+* `t`: the text of the annotation. Note that text must be url-encoded (use `%20` for space).
+#### Optional Properties
+* `as`: the time in seconds to jump to within a video for an annotation with an in-video link.
+
+A `)` character indicates the end of annotations and must appear after the final annotation.
