@@ -44,7 +44,6 @@ Each videos annotations consist of a list of annotations. Annotations are separa
 * `tp`: the type of the annotation. Possible values include `text` and `pause`.
 * `t`: the text of the annotation. Note that text must be url-encoded (use `%20` for space).
 #### Optional Properties
-* `at`: the action type of the annotation. Possible values values include `pause` (not yet implemented).
 * `as`: the time in seconds to jump to within a video for an annotation with an in-video link.
 
 A `)` character indicates the end of annotations and must appear after the final annotation.
