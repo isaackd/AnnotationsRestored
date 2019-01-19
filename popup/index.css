@@ -1,0 +1,16 @@
+textarea {
+	width: 98%;
+	height: 5rem;
+}
+input {
+	margin-bottom: 0.5rem;
+}
+#buttons {
+	display: flex;
+	width: 100%;
+
+	justify-content: center;
+}
+#buttons > input:first-child {
+	margin-right: 1rem;
+}

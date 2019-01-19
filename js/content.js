@@ -1,4 +1,5 @@
 const annotationParser = new AnnotationParser();
+let renderer;
 
 function setupExternalScript() {
 	// must be done this way due to the "x-ray" mode the content scripts are run in
@@ -11,17 +12,21 @@ function setupExternalScript() {
 			const data = e.data;
 			const type = data.type;
 			if (type === "__annotations_restored_renderer_start") {
-				rendererUpdateIntervalId = setInterval(() => {
-					const videoTime = player.getCurrentTime();
-					const updateEvent = new CustomEvent("__annotations_restored_renderer_update", {
-						detail: {videoTime}
-					});
-					window.dispatchEvent(updateEvent)
-				}, data.updateInterval);
+				if (!rendererUpdateIntervalId) {
+					rendererUpdateIntervalId = setInterval(() => {
+						const videoTime = player.getCurrentTime();
+						const updateEvent = new CustomEvent("__annotations_restored_renderer_update", {
+							detail: {videoTime}
+						});
+						window.dispatchEvent(updateEvent)
+					}, data.updateInterval);
+				}
 			}
 			else if (type === "__annotations_restored_renderer_stop") {
-				clearInterval(rendererUpdateIntervalId);
-				rendererUpdateIntervalId = null;
+				if (rendererUpdateIntervalId) {
+					clearInterval(rendererUpdateIntervalId);
+					rendererUpdateIntervalId = null;
+				}
 			}
 			else if (type === "__annotations_restored_renderer_seek_to") {
 				player.seekTo(data.seconds);
@@ -42,6 +47,8 @@ function setupExternalScript() {
 	script.textContent = code;
 	document.body.append(script);
 }
+
+setupExternalScript();
 
 function getAnnotationsFromDescription() {
 	return new Promise((resolve, reject) => {
@@ -94,9 +101,9 @@ function getAnnotationsFromDescription() {
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+	console.log(request);
 	if (request.type === "check_description_for_annotations") {
 		getAnnotationsFromDescription().then(annotations => {
-			setupExternalScript();
 			const videoContainer = document.getElementById("movie_player");
 			renderer = new AnnotationRenderer(annotations, videoContainer, videoContainer);
 			renderer.start();
@@ -112,7 +119,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		const annotationData = request.xml;
 		if (annotationData) {
 			console.info("Received annotation data from server");
-			setupExternalScript();
 			const annotationDom = annotationParser.xmlToDom(annotationData);
 			const annotationElements = annotationDom.getElementsByTagName("annotation");
 
@@ -125,5 +131,32 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	}
 	else if (request.type === "annotations_unavailable") {
 		console.info("Annotation data for this video is unavailable");
+	}
+	// popup annotation loading
+	else if (request.type === "popup_load_youtube" && request.data) {
+		console.info("loading youtube data");
+		const annotationDom = annotationParser.xmlToDom(request.data);
+		const annotationElements = annotationDom.getElementsByTagName("annotation");
+		const annotations = annotationParser.parseYoutubeFormat(annotationElements);
+		if (!renderer) {
+			const videoContainer = document.getElementById("movie_player");
+			renderer = new AnnotationRenderer(annotations, videoContainer, "https://www.youtube.com/");
+			renderer.start();
+		}
+		else {
+			renderer.changeAnnotationData(annotations);
+		}
+	}
+	else if (request.type === "popup_load_converted" && request.data) {
+		console.info("loading converted data");
+		const annotations = annotationParser.deserializeAnnotationList(request.data);
+		if (!renderer) {
+			const videoContainer = document.getElementById("movie_player");
+			renderer = new AnnotationRenderer(annotations, videoContainer, "https://www.youtube.com/");
+			renderer.start();
+		}
+		else {
+			renderer.changeAnnotationData(annotations);
+		}
 	}
 });
