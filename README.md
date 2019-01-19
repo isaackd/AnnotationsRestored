@@ -41,6 +41,7 @@ Each videos annotations consist of a list of annotations. Annotations are separa
 * `h`: the height of the annotation in pixels.
 * `ts`: the start of the time the annotation is displayed on screen in seconds.
 * `te`: the end of the time the annotation is displayed on screen in seconds.
+* `tp`: the type of the annotation. Possible values include `text` and `pause`.
 * `t`: the text of the annotation.
 #### Optional Properties
 * `at`: the action type of the annotation. Possible values values include `pause` (not yet implemented).
