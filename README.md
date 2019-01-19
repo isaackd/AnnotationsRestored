@@ -33,7 +33,7 @@ As I currently don't have access to a server to store new annotation data, it mu
 ## Documentation of the Annotations Restored format
 Annotations Restored uses a different format than YouTube used for annotations. The Annotations Restored format is generally more compact than the YouTube annotations format.
 
-Each videos annotations consist of a list of annotations. Annotations are separated by the `;` character, with no spaces. Each annotation consists of a set of properties, separated by the `,` character, also with no spaces. The properties for annotations are the following:
+Each videos annotations consist of a list of annotations. Annotations are separated by the `;` character, with no spaces. Each annotation consists of a set of properties, separated by the `,` character, also with no spaces. Between each property and value is a `=` symbol. The properties for annotations are the following:
 #### Required Properties
 * `x`: the x coordinate of the annotation in pixels.
 * `y`: the y coordinate of the annotation in pixels.
@@ -42,7 +42,7 @@ Each videos annotations consist of a list of annotations. Annotations are separa
 * `ts`: the start of the time the annotation is displayed on screen in seconds.
 * `te`: the end of the time the annotation is displayed on screen in seconds.
 * `tp`: the type of the annotation. Possible values include `text` and `pause`.
-* `t`: the text of the annotation.
+* `t`: the text of the annotation. Note that text must be url-encoded (use `%20` for space).
 #### Optional Properties
 * `at`: the action type of the annotation. Possible values values include `pause` (not yet implemented).
 * `au`: the url the annotation links to. Note that only youtube.com urls are supported at this time.
