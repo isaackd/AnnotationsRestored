@@ -35,17 +35,16 @@ Annotations Restored uses a different format than YouTube used for annotations. 
 
 Each videos annotations consist of a list of annotations. Annotations are separated by the `;` character, with no spaces. Each annotation consists of a set of properties, separated by the `,` character, also with no spaces. Between each property and value is a `=` symbol. The properties for annotations are the following:
 #### Required Properties
-* `x`: the x coordinate of the annotation in pixels.
-* `y`: the y coordinate of the annotation in pixels.
-* `w`: the width of the annotation in pixels.
-* `h`: the height of the annotation in pixels.
+* `x`: the x coordinate of the annotation in percent of the width of the video.
+* `y`: the y coordinate of the annotation in percent of the height of the video.
+* `w`: the width of the annotation in percent of the width of the video.
+* `h`: the height of the annotation in percent of the height of the video.
 * `ts`: the start of the time the annotation is displayed on screen in seconds.
 * `te`: the end of the time the annotation is displayed on screen in seconds.
 * `tp`: the type of the annotation. Possible values include `text` and `pause`.
 * `t`: the text of the annotation. Note that text must be url-encoded (use `%20` for space).
 #### Optional Properties
 * `at`: the action type of the annotation. Possible values values include `pause` (not yet implemented).
-* `au`: the url the annotation links to. Note that only youtube.com urls are supported at this time.
-* `as`: \[NOT YET IMPLEMENTED] the number of seconds that an action lasts. For the `pause` action type.
+* `as`: the time in seconds to jump to within a video for an annotation with an in-video link.
 
 A `)` character indicates the end of annotations and must appear after the final annotation.
