@@ -8,6 +8,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 		if (videoId) {
 
 			chrome.tabs.sendMessage(tab.id, {type: "check_description_for_annotations"}, response => {
+				console.log(response);
 				if (response.requestAnnotations) {
 					const requestUrl = annotationsEndpoint + videoId;
 					console.log(`Loading annotations for '${videoId}' from '${requestUrl}'`);
@@ -22,7 +23,8 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 							chrome.tabs.sendMessage(tab.id, {type: "annotations_unavailable"});
 						}
 					}).catch(e => {
-						throw e;
+						console.log("Annotation data is unavailable for this video");
+						chrome.tabs.sendMessage(tab.id, {type: "annotations_unavailable"});
 					});
 				}
 				else {

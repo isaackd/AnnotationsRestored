@@ -102,9 +102,8 @@ class AnnotationParser {
 		const dom = parser.parseFromString(xml, "application/xml");
 		return dom;
 	}
-	getAnnotationsFromXml(xmlDom) {
-		const parser = new DOMParser();
-		const dom = parser.parseFromString(xmlDom, "application/xml");
+	getAnnotationsFromXml(xml) {
+		const dom = this.xmlToDom(xml);
 		return dom.getElementsByTagName("annotation");
 	}
 	parseYoutubeFormat(annotationElements) {

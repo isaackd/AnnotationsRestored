@@ -9,6 +9,11 @@
     "permissions": [
         "tabs"
     ],
+    "browser_action": {
+        "default_title": "Annotations Restored",
+        "default_popup": "popup/index.html"
+    },
+
     "content_scripts": [{
         "matches": ["*://www.youtube.com/watch?*"],
         "js": ["js/AnnotationParser.js", "js/AnnotationRenderer.js", "js/content.js"],

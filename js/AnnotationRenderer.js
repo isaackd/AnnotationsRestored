@@ -24,6 +24,13 @@ class AnnotationRenderer {
 		this.updateInterval = updateInterval;
 
 	}
+	changeAnnotationData(annotations) {
+		this.stop();
+		this.removeAnnotationElements();
+		this.annotations = annotations;
+		this.createAnnotationElements();
+		this.start();
+	}
 	createAnnotationElements() {
 		for (const annotation of this.annotations) {
 			const el = document.createElement("div");
@@ -49,7 +56,13 @@ class AnnotationRenderer {
 			this.annotationsContainer.append(el);
 		}
 	}
+	removeAnnotationElements() {
+		for (const annotation of this.annotations) {
+			annotation.__element.remove();
+		}
+	}
 	update(videoTime) {
+		console.log("updating: ", videoTime);
 		for (const annotation of this.annotations) {
 			const el = annotation.__element;
 			const start = annotation.timeStart;
@@ -61,6 +74,11 @@ class AnnotationRenderer {
 			else if (!el.hasAttribute("hidden") && (videoTime < start || videoTime > end)) {
 				el.setAttribute("hidden", "");
 			}
+		}
+	}
+	hideAll() {
+		for (const annotation of this.annotations) {
+			annotation.__element.setAttribute("hidden", "");
 		}
 	}
 	start() {
