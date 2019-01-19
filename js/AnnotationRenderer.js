@@ -62,7 +62,6 @@ class AnnotationRenderer {
 		}
 	}
 	update(videoTime) {
-		console.log("updating: ", videoTime);
 		for (const annotation of this.annotations) {
 			const el = annotation.__element;
 			const start = annotation.timeStart;
