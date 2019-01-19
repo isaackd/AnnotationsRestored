@@ -7,39 +7,76 @@ function setupExternalScript() {
 	const code = `
 		const player = document.getElementById("movie_player");
 		let rendererUpdateIntervalId;
+		let rendererUpdateInterval = 1000;
+
+		/*
+		possible 'state' values
+	    	-1 (unstarted)
+	    	0 (ended)
+	    	1 (playing)
+	    	2 (paused)
+	    	3 (buffering)
+	    	5 (video cued).
+		*/
+		player.addEventListener("onStateChange", state => {
+			if (state === 1) {
+				__ar__startRenderer(rendererUpdateInterval);
+			} 
+			else if (state === 2) {
+				__ar__stopRenderer();
+			}
+		}); 
 
 		window.addEventListener("message", e => {
 			const data = e.data;
 			const type = data.type;
 			if (type === "__annotations_restored_renderer_start") {
-				if (!rendererUpdateIntervalId) {
-					rendererUpdateIntervalId = setInterval(() => {
-						const videoTime = player.getCurrentTime();
-						const updateEvent = new CustomEvent("__annotations_restored_renderer_update", {
-							detail: {videoTime}
-						});
-						window.dispatchEvent(updateEvent)
-					}, data.updateInterval);
-				}
+				rendererUpdateInterval = data.updateInterval;
+				__ar__startRenderer(data.updateInterval);
 			}
 			else if (type === "__annotations_restored_renderer_stop") {
-				if (rendererUpdateIntervalId) {
-					clearInterval(rendererUpdateIntervalId);
-					rendererUpdateIntervalId = null;
-				}
+				__ar__stopRenderer();
 			}
 			else if (type === "__annotations_restored_renderer_seek_to") {
-				player.seekTo(data.seconds);
-				const videoTime = player.getCurrentTime();
-				const updateEvent = new CustomEvent("__annotations_restored_renderer_update", {
-					detail: {videoTime}
-				});
-				window.dispatchEvent(updateEvent)
+				__ar__seekTo(data.seconds);
 			}
 			else if (type === "__annotations_restored_renderer_urlclick") {
 				window.location.href = data.url;
 			}
 		});
+
+		function __ar__startRenderer(updateInterval) {
+			if (!rendererUpdateIntervalId) {
+				__ar__updateAnnotations();
+				rendererUpdateIntervalId = setInterval(() => {
+					__ar__updateAnnotations();
+				}, updateInterval);
+			}
+		}
+		function __ar__stopRenderer() {
+			if (rendererUpdateIntervalId) {
+				__ar__updateAnnotations();
+				clearInterval(rendererUpdateIntervalId);
+				rendererUpdateIntervalId = null;
+			}
+		}
+
+		function __ar__updateAnnotations() {
+			const videoTime = player.getCurrentTime();
+			const updateEvent = new CustomEvent("__annotations_restored_renderer_update", {
+				detail: {videoTime}
+			});
+			window.dispatchEvent(updateEvent)
+		}
+
+		function __ar__seekTo(seconds) {
+			player.seekTo(seconds);
+			const videoTime = player.getCurrentTime();
+			const updateEvent = new CustomEvent("__annotations_restored_renderer_update", {
+				detail: {videoTime}
+			});
+			window.dispatchEvent(updateEvent)
+		}
 	`;
 
 	const script = document.createElement("script");
