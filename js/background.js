@@ -1,5 +1,5 @@
 // testing endpoint until an actual api with all the annotation data is available
-const annotationsEndpoint = "http://localhost:3000/annotations?id=";
+const annotationsEndpoint = "https://archive.omar.yt/api/v1/annotations/";
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 	if (changeInfo.status === "complete" && tab.url.startsWith("https://www.youtube.com/watch?")) {

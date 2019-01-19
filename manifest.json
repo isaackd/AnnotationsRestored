@@ -7,7 +7,8 @@
     "description": "Brings annotation support back to YouTube™!",
 
     "permissions": [
-        "tabs"
+        "tabs",
+		"https://archive.omar.yt/api/v1/annotations/*"
     ],
     "browser_action": {
         "default_title": "Annotations Restored",
