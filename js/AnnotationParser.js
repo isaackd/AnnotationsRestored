@@ -213,11 +213,9 @@ class AnnotationParser {
 			const srcVid = url.searchParams.get("src_vid");
 			const toVid = url.searchParams.get("v");
 
-			if (!srcVid || !toVid) return null;
-
 			// check if it's a link to a new video
 			// or just a timestamp
-			if (srcVid === toVid) {
+			if (srcVid && toVid && srcVid === toVid) {
 				let seconds = 0;
 				const hash = url.hash;
 				if (hash && hash.startsWith("#t=")) {
