@@ -1,13 +1,17 @@
 // testing endpoint until an actual api with all the annotation data is available
-const annotationsEndpoint = "http://localhost:3000/annotations?id=";
+const annotationsEndpoint = "https://archive.omar.yt/api/v1/annotations/";
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 	if (changeInfo.status === "complete" && tab.url.startsWith("https://www.youtube.com/watch?")) {
 		const url = new URL(tab.url);
 		const videoId = url.searchParams.get("v");
+
+		chrome.tabs.sendMessage(tab.id, {type: "remove_renderer_annotations"});
+
 		if (videoId) {
 
 			chrome.tabs.sendMessage(tab.id, {type: "check_description_for_annotations"}, response => {
+				console.log(response);
 				if (response.requestAnnotations) {
 					const requestUrl = annotationsEndpoint + videoId;
 					console.log(`Loading annotations for '${videoId}' from '${requestUrl}'`);
@@ -22,7 +26,8 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 							chrome.tabs.sendMessage(tab.id, {type: "annotations_unavailable"});
 						}
 					}).catch(e => {
-						throw e;
+						console.log("Annotation data is unavailable for this video");
+						chrome.tabs.sendMessage(tab.id, {type: "annotations_unavailable"});
 					});
 				}
 				else {

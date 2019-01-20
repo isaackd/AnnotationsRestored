@@ -1,7 +1,7 @@
 class AnnotationParser {
 	/* ATTRIBUTES FOUND IN YOUTUBE'S ANNOTATION FORMAT */
 	static get baseAttributes() {
-		return ["id", "type", "popup", "log_data", "itct"];
+		return ["id", "type", "style", "popup", "log_data", "itct"];
 	}
 	/* ATTRIBUTES THAT MUST BE PRESENT IN AR FORMAT */
 	static get requiredAttributes() {
@@ -10,6 +10,7 @@ class AnnotationParser {
 	static get attributeMap() {
 		return {
 			type: "tp",
+			style: "s",
 			x: "x",
 			y: "y",
 			width: "w",
@@ -35,7 +36,7 @@ class AnnotationParser {
 			let finalValue = "";
 
 			if (mappedKey === "text" || mappedKey === "actionType" || mappedKey === "actionUrl"
-				|| mappedKey === "type") {
+				|| mappedKey === "type" || mappedKey === "style") {
 				finalValue = decodeURIComponent(value);
 			}
 			else {
@@ -52,12 +53,12 @@ class AnnotationParser {
 			for (const key in annotation) {
 				const mappedKey = map[key];
 				if ((key === "text" || key === "actionType" || key === "actionUrl") 
-					&& mappedKey && annotation[key]) {
+					&& mappedKey && annotation.hasOwnProperty(key)) {
 
 					let text = encodeURIComponent(annotation[key]);
 					serialized += `${mappedKey}=${text},`;
 				}
-				else if (mappedKey && 
+				else if (mappedKey && annotation.hasOwnProperty(key) &&
 					(key !== "text" && key !== "actionType" && key !== "actionUrl")) {
 
 					serialized += `${mappedKey}=${annotation[key]},`;
@@ -102,9 +103,8 @@ class AnnotationParser {
 		const dom = parser.parseFromString(xml, "application/xml");
 		return dom;
 	}
-	getAnnotationsFromXml(xmlDom) {
-		const parser = new DOMParser();
-		const dom = parser.parseFromString(xmlDom, "application/xml");
+	getAnnotationsFromXml(xml) {
+		const dom = this.xmlToDom(xml);
 		return dom.getElementsByTagName("annotation");
 	}
 	parseYoutubeFormat(annotationElements) {
@@ -150,9 +150,11 @@ class AnnotationParser {
 				height: backgroundShape.height, 
 				timeStart,
 				timeEnd,
-				type,
 				attributes
 			};
+
+			if (type) obj.type = type;
+			if (attributes.style) obj.style = attributes.style;
 
 			if (text) obj.text = text;
 			if (action) {
@@ -211,11 +213,9 @@ class AnnotationParser {
 			const srcVid = url.searchParams.get("src_vid");
 			const toVid = url.searchParams.get("v");
 
-			if (!srcVid || !toVid) return null;
-
 			// check if it's a link to a new video
 			// or just a timestamp
-			if (srcVid === toVid) {
+			if (srcVid && toVid && srcVid === toVid) {
 				let seconds = 0;
 				const hash = url.hash;
 				if (hash && hash.startsWith("#t=")) {
