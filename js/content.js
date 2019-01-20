@@ -6,8 +6,11 @@ function setupExternalScript() {
 	// removing all non-standard functions from the player, such as getCurrentTime :/
 	const code = `
 		const player = document.getElementById("movie_player");
+		const progressBar = player.getElementsByClassName("ytp-progress-bar")[0];
 		let rendererUpdateIntervalId;
 		let rendererUpdateInterval = 1000;
+
+		let progressMoveLastCalled = 0;
 
 		/*
 		possible 'state' values
@@ -25,7 +28,26 @@ function setupExternalScript() {
 			else if (state === 2) {
 				__ar__stopRenderer();
 			}
-		}); 
+		});
+
+		progressBar.addEventListener("mousedown", e => {
+			progressBar.addEventListener("mousemove", progressMouseMoveHandler);
+			progressBar.addEventListener("mouseup", progressMouseUpHandler);
+		});
+
+		function progressMouseMoveHandler() {
+			// only update every 250ms for performance
+			const throttled = (performance.now() - progressMoveLastCalled) < 250;
+			if (!throttled) {
+				__ar__updateAnnotations();
+				progressMoveLastCalled = performance.now();
+			}
+		}
+		function progressMouseUpHandler() {
+			__ar__updateAnnotations();
+			progressBar.removeEventListener("mouseup", progressMouseUpHandler);
+			progressBar.removeEventListener("mousemove", progressMouseMoveHandler);
+		}
 
 		window.addEventListener("message", e => {
 			const data = e.data;
