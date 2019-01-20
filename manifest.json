@@ -8,7 +8,8 @@
 
     "permissions": [
         "tabs",
-		"https://archive.omar.yt/api/v1/annotations/*"
+		"https://archive.omar.yt/api/v1/annotations/*",
+		"https://gist.githubusercontent.com/*"
     ],
     "browser_action": {
         "default_title": "Annotations Restored",

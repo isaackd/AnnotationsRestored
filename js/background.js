@@ -6,34 +6,54 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 		const url = new URL(tab.url);
 		const videoId = url.searchParams.get("v");
 
-		chrome.tabs.sendMessage(tab.id, {type: "remove_renderer_annotations"});
+		chrome.tabs.sendMessage(tab.id, {
+			type: "remove_renderer_annotations"
+		});
 
 		if (videoId) {
 
-			chrome.tabs.sendMessage(tab.id, {type: "check_description_for_annotations"}, response => {
-				console.log(response);
-				if (response.requestAnnotations) {
-					const requestUrl = annotationsEndpoint + videoId;
-					console.log(`Loading annotations for '${videoId}' from '${requestUrl}'`);
+			chrome.tabs.sendMessage(tab.id, {
+				type: "check_description_for_annotations"
+			}, response => {
+				if (response) {
+					chrome.tabs.sendMessage(tab.id, {
+						type: "check_description_for_gist_annotations"
+					}, response => {
+						if (response) {
 
-					fetch(requestUrl)
-					.then(response => response.text())
-					.then(text => {
-						if (text) {
-							chrome.tabs.sendMessage(tab.id, {type: "annotations_received", xml: text});
+							console.log(response);
+							if (response.requestAnnotations) {
+								const requestUrl = annotationsEndpoint + videoId;
+								console.log(`Loading annotations for '${videoId}' from '${requestUrl}'`);
+
+								fetch(requestUrl)
+								.then(response => response.text())
+								.then(text => {
+									if (text) {
+										chrome.tabs.sendMessage(tab.id, {
+											type: "annotations_received",
+											xml: text
+										});
+									} else {
+										chrome.tabs.sendMessage(tab.id, {
+											type: "annotations_unavailable"
+										});
+									}
+								}).catch(e => {
+									console.log("Annotation data is unavailable for this video");
+									chrome.tabs.sendMessage(tab.id, {
+										type: "annotations_unavailable"
+									});
+								});
+							} else {
+								console.info("Annotations Gist found in description..");
+							}
 						}
-						else {
-							chrome.tabs.sendMessage(tab.id, {type: "annotations_unavailable"});
-						}
-					}).catch(e => {
-						console.log("Annotation data is unavailable for this video");
-						chrome.tabs.sendMessage(tab.id, {type: "annotations_unavailable"});
 					});
+
 				}
-				else {
-					console.info("Annotations found in description..");
-				}
-			});
-		}
+			})
+		};
+
 	}
 });

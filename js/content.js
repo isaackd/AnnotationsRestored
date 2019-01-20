@@ -113,50 +113,106 @@ function getAnnotationsFromDescription() {
 	return new Promise((resolve, reject) => {
 		let intervalCount = 0;
 		const interval = setInterval(() => {
-			if (intervalCount === 6) {
-				reject();
-				clearInterval(inverval);
-				return;
-			} 
-			const descriptionContainer = document.getElementById("description");
-			if (!descriptionContainer) return false;
-			const formattedString = descriptionContainer.getElementsByTagName("yt-formatted-string")[0];
-			if (!formattedString) return false;
-			const description = formattedString.textContent;
-
-			if (description) {
-				const startFlag = description.indexOf("[ar_start]");
-				const endFlag = description.indexOf("[ar_end]");
-
-				if (startFlag === -1 || endFlag === -1) {
-					reject("Couldn\'t find either a start or end flag");
+				if (intervalCount === 6) {
+					reject();
 					clearInterval(interval);
 					return;
 				}
+				const descriptionContainer = document.getElementById("description");
+				if (!descriptionContainer)
+					return false;
+				const formattedString = descriptionContainer.getElementsByTagName("yt-formatted-string")[0];
+				if (!formattedString)
+					return false;
+				const description = formattedString.textContent;
 
-				try {
-					const startFlagText = "[ar_start]";
-					const serializedAnnotations = description.substring(startFlag + startFlagText.length, endFlag);
-					const annotations = annotationParser.deserializeAnnotationList(serializedAnnotations);
+				if (description) {
+					const startFlag = description.indexOf("[ar_start]");
+					const endFlag = description.indexOf("[ar_end]");
 
-					resolve(annotations);
+					if (startFlag === -1 || endFlag === -1) {
+						reject("Couldn\'t find either a start or end flag");
+						clearInterval(interval);
+						return;
+					}
+
+					try {
+						const startFlagText = "[ar_start]";
+						const serializedAnnotations = description.substring(startFlag + startFlagText.length, endFlag);
+						const annotations = annotationParser.deserializeAnnotationList(serializedAnnotations);
+
+						resolve(annotations);
+						clearInterval(interval);
+						return;
+					} catch (e) {
+						reject("Possibly malformed annotation data");
+						clearInterval(interval);
+						return;
+					}
+
+				} else {
+					reject("No description text");
 					clearInterval(interval);
 					return;
 				}
-				catch(e) {
-					reject("Possibly malformed annotation data");
-					clearInterval(interval);
-					return;
-				}
-			}
-			else {
-				reject("No description text");
-				clearInterval(interval);
-				return;
-			}
-			intervalCount++;
-		}, 500);
+				intervalCount++;
+			}, 500);
 	});
+}
+
+function getAnnotationsGistFromDescription() {
+	return new Promise((resolve, reject) => {
+		let intervalCount = 0;
+		const interval = setInterval(() => {
+				if (intervalCount === 6) {
+					reject();
+					clearInterval(interval);
+					return;
+				}
+				const descriptionContainer = document.getElementById("description");
+				if (!descriptionContainer)
+					return false;
+				const formattedString = descriptionContainer.getElementsByTagName("yt-formatted-string")[0];
+				if (!formattedString)
+					return false;
+				const description = formattedString.textContent;
+
+				if (description) {
+					//Gist annotations
+					const startGistFlag = description.indexOf("[ar_gist_start]");
+					const endGistFlag = description.indexOf("[ar_gist_end]");
+					const gistURLPrefix = "https://gist.githubusercontent.com/"
+						const gistURLSuffix = "/raw"
+						console.log("Trying linked annotations")
+						if (startGistFlag === -1 || endGistFlag === -1) {
+							reject("Couldn\'t find either a start or end flag");
+							clearInterval(interval);
+							return;
+						}
+
+						try {
+							const startGistFlagText = "[ar_gist_start]";
+							fetch(gistURLPrefix + (description.substring(startGistFlag + startGistFlagText.length, endGistFlag)) + gistURLSuffix)
+							.then(function (response) {
+								const serializedAnnotations = response.body;
+
+							});
+
+						} catch (e) {
+							reject("Possibly malformed annotation data");
+							clearInterval(interval);
+							return;
+						}
+
+				} else {
+					reject("No description text");
+					clearInterval(interval);
+					return;
+				}
+				intervalCount++;
+			}, 500);
+	});
+
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -167,14 +223,33 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			renderer = new AnnotationRenderer(annotations, videoContainer, videoContainer);
 			renderer.start();
 			console.info("Found annotation data in description");
-			sendResponse({requestAnnotations: false});
+			sendResponse({
+				requestAnnotations: false
+			});
 		}).catch(e => {
-			console.info("No annotation data in description, checking server...");
-			sendResponse({requestAnnotations: true});
+			console.info("No annotation data in description, checking for Gist...");
+			sendResponse({
+				requestAnnotations: true
+			});
 		});
 		return true;
-	}
-	else if (request.type === "annotations_received") {
+	} else if (request.type === "check_description_for_gist_annotations") {
+		getAnnotationsGistFromDescription().then(annotations => {
+			const videoContainer = document.getElementById("movie_player");
+			renderer = new AnnotationRenderer(annotations, videoContainer, videoContainer);
+			renderer.start();
+			console.info("Found annotation Gist data in description");
+			sendResponse({
+				requestAnnotations: false
+			});
+		}).catch(e => {
+			console.info("No annotation data in description, checking server...");
+			sendResponse({
+				requestAnnotations: true
+			});
+		});
+		return true;
+	} else if (request.type === "annotations_received") {
 		const annotationData = request.xml;
 		if (annotationData) {
 			console.info("Received annotation data from server");
@@ -187,11 +262,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			renderer = new AnnotationRenderer(annotations, videoContainer, "https://www.youtube.com/");
 			renderer.start();
 		}
-	}
-	else if (request.type === "annotations_unavailable") {
+	} else if (request.type === "annotations_unavailable") {
 		console.info("Annotation data for this video is unavailable");
-	}
-	else if (request.type === "remove_renderer_annotations") {
+	} else if (request.type === "remove_renderer_annotations") {
 		if (renderer) {
 			renderer.stop();
 			renderer.removeAnnotationElements();
@@ -207,20 +280,17 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			const videoContainer = document.getElementById("movie_player");
 			renderer = new AnnotationRenderer(annotations, videoContainer, "https://www.youtube.com/");
 			renderer.start();
-		}
-		else {
+		} else {
 			renderer.changeAnnotationData(annotations);
 		}
-	}
-	else if (request.type === "popup_load_converted" && request.data) {
+	} else if (request.type === "popup_load_converted" && request.data) {
 		console.info("loading converted data");
 		const annotations = annotationParser.deserializeAnnotationList(request.data);
 		if (!renderer) {
 			const videoContainer = document.getElementById("movie_player");
 			renderer = new AnnotationRenderer(annotations, videoContainer, "https://www.youtube.com/");
 			renderer.start();
-		}
-		else {
+		} else {
 			renderer.changeAnnotationData(annotations);
 		}
 	}
