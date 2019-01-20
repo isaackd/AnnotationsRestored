@@ -169,6 +169,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	else if (request.type === "annotations_unavailable") {
 		console.info("Annotation data for this video is unavailable");
 	}
+	else if (request.type === "remove_renderer_annotations") {
+		if (renderer) {
+			renderer.stop();
+			renderer.removeAnnotationElements();
+		}
+	}
 	// popup annotation loading
 	else if (request.type === "popup_load_youtube" && request.data) {
 		console.info("loading youtube data");

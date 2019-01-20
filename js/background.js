@@ -5,6 +5,9 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 	if (changeInfo.status === "complete" && tab.url.startsWith("https://www.youtube.com/watch?")) {
 		const url = new URL(tab.url);
 		const videoId = url.searchParams.get("v");
+
+		chrome.tabs.sendMessage(tab.id, {type: "remove_renderer_annotations"});
+
 		if (videoId) {
 
 			chrome.tabs.sendMessage(tab.id, {type: "check_description_for_annotations"}, response => {
