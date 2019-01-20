@@ -1,26 +1,33 @@
 {
-    "manifest_version": 2,
-    "name": "Annotations Restored for YouTube™",
-    "short_name": "Annotations Restored",
-    "version": "0.0.3",
+	"manifest_version": 2,
+	"name": "Annotations Restored for YouTube™",
+	"short_name": "Annotations Restored",
+	"version": "0.0.3",
 
-    "description": "Brings annotation support back to YouTube™!",
+	"description": "Brings annotation support back to YouTube™!",
 
-    "permissions": [
-        "tabs",
-		"https://archive.omar.yt/api/v1/annotations/*"
-    ],
-    "browser_action": {
-        "default_title": "Annotations Restored",
-        "default_popup": "popup/index.html"
-    },
-
-    "content_scripts": [{
-        "matches": ["*://www.youtube.com/watch?*"],
-        "js": ["js/AnnotationParser.js", "js/AnnotationRenderer.js", "js/content.js"],
-        "css": ["css/styles.css"]
-    }],
-    "background": {
-        "scripts":["js/background.js"]
-    }
+	"permissions": [
+		"tabs",
+		"https://archive.omar.yt/api/v1/annotations/*",
+		"storage"
+	],
+	"browser_action": {
+		"default_title": "Annotations Restored",
+		"default_popup": "popup/index.html"
+	},
+	//"options_page": "options/options.html",
+	"options_ui": {
+		"chrome_style": true,
+		"page": "options/options.html",
+		"open_in_tab": false
+	},
+	"content_scripts": [{
+			"matches": ["*://www.youtube.com/watch?*"],
+			"js": ["js/AnnotationParser.js", "js/AnnotationRenderer.js", "js/content.js"],
+			"css": ["css/styles.css"]
+		}
+	],
+	"background": {
+		"scripts": ["js/background.js"]
+	}
 }
