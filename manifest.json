@@ -2,13 +2,15 @@
     "manifest_version": 2,
     "name": "Annotations Restored for YouTube™",
     "short_name": "Annotations Restored",
-    "version": "0.0.3",
+    "version": "0.0.4",
 
     "description": "Brings annotation support back to YouTube™!",
 
     "permissions": [
         "tabs",
-		"https://archive.omar.yt/api/v1/annotations/*"
+		"https://archive.omar.yt/api/v1/annotations/*",
+		"https://gist.githubusercontent.com/*",
+        "https://pastebin.com/raw/*"
     ],
     "browser_action": {
         "default_title": "Annotations Restored",
