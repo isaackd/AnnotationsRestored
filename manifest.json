@@ -9,7 +9,7 @@
     "permissions": [
         "tabs",
 		"https://archive.omar.yt/api/v1/annotations/*",
-		"https://gist.githubusercontent.com/*",
+		"https://gist.githubusercontent.com/*/raw/*",
         "https://pastebin.com/raw/*"
     ],
     "browser_action": {
