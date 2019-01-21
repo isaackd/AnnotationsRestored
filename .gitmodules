@@ -1,0 +1,3 @@
+[submodule "js/annotationlib"]
+	path = js/annotationlib
+	url = https://github.com/afrmtbl/annotationlib
