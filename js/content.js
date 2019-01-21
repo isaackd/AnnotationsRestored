@@ -109,71 +109,166 @@ function setupExternalScript() {
 
 setupExternalScript();
 
-function getAnnotationsFromDescription() {
+function getAnnotationsFromDescription(description) {
+	return new Promise((resolve, reject) => {
+		const startFlagText = "[ar_start]";
+		const startFlag = description.indexOf(startFlagText);
+		const endFlag = description.indexOf("[ar_end]");
+
+		if (startFlag === -1 || endFlag === -1) {
+			reject("Couldn\'t find either a start or end flag");
+			return;
+		}
+
+		try {
+			const serializedAnnotations = description.substring(startFlag + startFlagText.length, endFlag);
+			const annotations = annotationParser.deserializeAnnotationList(serializedAnnotations);
+
+			resolve(annotations);
+		} 
+		catch (e) {
+			reject(`Possibly malformed annotation data: ${e}`);
+		}
+	});
+}
+// get from github gists
+function getAnnotationsGistFromDescription(description) {
+	return new Promise((resolve, reject) => {
+		// Gist annotations
+		const startGistFlagText = "[ar_gist_start]";
+		const startGistFlag = description.indexOf(startGistFlagText);
+		const endGistFlag = description.indexOf("[ar_gist_end]");
+
+		if (startGistFlag === -1 || endGistFlag === -1) {
+			reject("Couldn\'t find either a start or end flag");
+			return;
+		}
+
+		try {
+			const gistUrlPrefix = "https://gist.githubusercontent.com/";
+			const gistUrlSuffix = "/raw";
+
+			const gistUrl = description.substring(startGistFlag + startGistFlagText.length, endGistFlag);
+			const endpoint = `${gistUrlPrefix}${gistUrl}${gistUrlSuffix}`;
+
+			fetch(endpoint)
+			.then(response => response.text())
+			.then(text => {
+				const annotations = annotationParser.deserializeAnnotationList(text);
+				resolve(annotations);
+			})
+			.catch(e => {
+				reject(`Possibly malformed annotation data: ${e}`);
+			});
+		} 
+		catch (e) {
+			reject(`Possibly malformed annotation data: ${e}`);
+		}
+	});
+}
+// get from pastebin
+function getAnnotationsPastebinFromDescription(description) {
+	return new Promise((resolve, reject) => {
+		// Gist annotations
+		const startPasteFlagText = "[ar_pastebin_start]";
+		const startPasteFlag = description.indexOf(startPasteFlagText);
+		const endPasteFlag = description.indexOf("[ar_pastebin_end]");
+
+		if (startPasteFlag === -1 || endPasteFlag === -1) {
+			reject("Couldn\'t find either a start or end flag");
+			return;
+		}
+
+		try {
+			const pasteUrlPrefix = "https://pastebin.com/raw/";
+
+			const startPasteFlagText = "[ar_pastebin_start]";
+			const pasteUrl = description.substring(startPasteFlag + startPasteFlagText.length, endPasteFlag);
+			const endpoint = `${pasteUrlPrefix}${pasteUrl}`;
+
+			fetch(endpoint)
+			.then(response => response.text())
+			.then(text => {
+				const annotations = annotationParser.deserializeAnnotationList(text);
+				resolve(annotations);
+			})
+			.catch(e => {
+				reject(`Possibly malformed annotation data: ${e}`);
+			});
+		} 
+		catch (e) {
+			reject(`Possibly malformed annotation data: ${e}`);
+		}
+	});
+}
+
+function getDescription(retries = 6, retryInterval = 500) {
 	return new Promise((resolve, reject) => {
 		let intervalCount = 0;
 		const interval = setInterval(() => {
-			if (intervalCount === 6) {
+			if (intervalCount === retries) {
 				reject();
-				clearInterval(inverval);
-				return;
-			} 
-			const descriptionContainer = document.getElementById("description");
-			if (!descriptionContainer) return false;
-			const formattedString = descriptionContainer.getElementsByTagName("yt-formatted-string")[0];
-			if (!formattedString) return false;
-			const description = formattedString.textContent;
-
-			if (description) {
-				const startFlag = description.indexOf("[ar_start]");
-				const endFlag = description.indexOf("[ar_end]");
-
-				if (startFlag === -1 || endFlag === -1) {
-					reject("Couldn\'t find either a start or end flag");
-					clearInterval(interval);
-					return;
-				}
-
-				try {
-					const startFlagText = "[ar_start]";
-					const serializedAnnotations = description.substring(startFlag + startFlagText.length, endFlag);
-					const annotations = annotationParser.deserializeAnnotationList(serializedAnnotations);
-
-					resolve(annotations);
-					clearInterval(interval);
-					return;
-				}
-				catch(e) {
-					reject("Possibly malformed annotation data");
-					clearInterval(interval);
-					return;
-				}
-			}
-			else {
-				reject("No description text");
 				clearInterval(interval);
 				return;
 			}
+			const descriptionContainer = document.getElementById("description");
+			if (!descriptionContainer)
+				return false;
+			const formattedString = descriptionContainer.getElementsByTagName("yt-formatted-string")[0];
+			if (!formattedString)
+				return false;
+			const description = formattedString.textContent;
+
+			if (description) {
+				resolve(description);
+				clearInterval(interval);
+			} 
+			else {
+				reject("No description text");
+				clearInterval(interval);
+			}
 			intervalCount++;
-		}, 500);
+		}, retryInterval);
+	});
+}
+
+function getFirstValidDescriptionAnnotations() {
+	return new Promise((resolve, reject) => {
+		getDescription().then(async description => {
+			const embedded = await getAnnotationsFromDescription(description).catch(e => {/* discard the error and check the next source */});
+			if (embedded) { resolve({annotations: embedded, type: "embedded"}); return; }
+
+			const gist = await getAnnotationsGistFromDescription(description).catch(e => {/* discard the error and check the next source */});
+			if (gist) { resolve({annotations: gist, type: "gist"}); return; }
+
+			const pastebin = await getAnnotationsPastebinFromDescription(description).catch(e => {/* discard the error and check the next source */});
+			if (pastebin) { resolve({annotations: pastebin, type: "pastebin"}); return; }
+
+			reject(`Couldn\'t find embedded, gist, or pastebin annotations`);
+		}).catch(e => {
+			reject(`Couldn\'t find description: ${e}`);
+		});
 	});
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	console.log(request);
 	if (request.type === "check_description_for_annotations") {
-		getAnnotationsFromDescription().then(annotations => {
-			const videoContainer = document.getElementById("movie_player");
-			renderer = new AnnotationRenderer(annotations, videoContainer, videoContainer);
-			renderer.start();
-			console.info("Found annotation data in description");
-			sendResponse({requestAnnotations: false});
+		getFirstValidDescriptionAnnotations().then(data => {
+			startNewAnnotationRenderer(data.annotations);
+			console.info(`Found ${data.type} annotation data in description`);
+			sendResponse({
+				foundAnnotations: true
+			});
 		}).catch(e => {
-			console.info("No annotation data in description, checking server...");
-			sendResponse({requestAnnotations: true});
+			console.info(e);
+			sendResponse({
+				foundAnnotations: false
+			});
 		});
+		// return true so chrome knows we're responding asynchronously
 		return true;
-	}
+	} 
 	else if (request.type === "annotations_received") {
 		const annotationData = request.xml;
 		if (annotationData) {
@@ -182,15 +277,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			const annotationElements = annotationDom.getElementsByTagName("annotation");
 
 			const annotations = annotationParser.parseYoutubeFormat(annotationElements);
-
-			const videoContainer = document.getElementById("movie_player");
-			renderer = new AnnotationRenderer(annotations, videoContainer, "https://www.youtube.com/");
-			renderer.start();
+			startNewAnnotationRenderer(annotations);
 		}
-	}
+	} 
 	else if (request.type === "annotations_unavailable") {
 		console.info("Annotation data for this video is unavailable");
-	}
+	} 
 	else if (request.type === "remove_renderer_annotations") {
 		if (renderer) {
 			renderer.stop();
@@ -204,24 +296,26 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		const annotationElements = annotationDom.getElementsByTagName("annotation");
 		const annotations = annotationParser.parseYoutubeFormat(annotationElements);
 		if (!renderer) {
-			const videoContainer = document.getElementById("movie_player");
-			renderer = new AnnotationRenderer(annotations, videoContainer, "https://www.youtube.com/");
-			renderer.start();
-		}
+			startNewAnnotationRenderer(annotations);
+		} 
 		else {
 			renderer.changeAnnotationData(annotations);
 		}
-	}
+	} 
 	else if (request.type === "popup_load_converted" && request.data) {
 		console.info("loading converted data");
 		const annotations = annotationParser.deserializeAnnotationList(request.data);
 		if (!renderer) {
-			const videoContainer = document.getElementById("movie_player");
-			renderer = new AnnotationRenderer(annotations, videoContainer, "https://www.youtube.com/");
-			renderer.start();
-		}
+			startNewAnnotationRenderer(annotations);
+		} 
 		else {
 			renderer.changeAnnotationData(annotations);
 		}
 	}
 });
+
+function startNewAnnotationRenderer(annotations) {
+	const videoContainer = document.getElementById("movie_player");
+	renderer = new AnnotationRenderer(annotations, videoContainer, "https://www.youtube.com/");
+	renderer.start();
+}
