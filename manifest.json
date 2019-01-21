@@ -19,7 +19,7 @@
 
     "content_scripts": [{
         "matches": ["*://www.youtube.com/watch?*"],
-        "js": ["js/AnnotationParser.js", "js/AnnotationRenderer.js", "js/content.js"],
+        "js": ["js/annotationlib/AnnotationParser.js", "js/annotationlib/AnnotationRenderer.js", "js/content.js"],
         "css": ["css/styles.css"]
     }],
     "background": {
