@@ -8,6 +8,7 @@
 
     "permissions": [
         "tabs",
+		"storage",
 		"https://archive.omar.yt/api/v1/annotations/*",
 		"https://gist.githubusercontent.com/*",
         "https://pastebin.com/raw/*"
@@ -16,7 +17,11 @@
         "default_title": "Annotations Restored",
         "default_popup": "popup/index.html"
     },
-
+	"options_ui": {
+		"chrome_style": true,
+		"page": "options/options.html",
+		"open_in_tab": false
+	},
     "content_scripts": [{
         "matches": ["*://www.youtube.com/watch?*"],
         "js": ["js/AnnotationParser.js", "js/AnnotationRenderer.js", "js/content.js"],

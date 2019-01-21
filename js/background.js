@@ -1,6 +1,48 @@
 // testing endpoint until an actual api with all the annotation data is available
 const annotationsEndpoint = "https://archive.omar.yt/api/v1/annotations/";
 
+//set default options, load user-set options
+let optarchived;
+let optmodern;
+let optpause;
+
+chrome.storage.sync.get(['optarchived'], function (result) {
+	if (result.optarchived === undefined) {
+		chrome.storage.sync.set({
+			optarchived: true
+		}, function () {
+			console.log('Option Saved')
+			optarchived = true
+		});
+	} else {
+		optarchived = result.optarchived;
+	};
+});
+chrome.storage.sync.get(['optmodern'], function (result) {
+	if (result.optmodern === undefined) {
+		chrome.storage.sync.set({
+			optmodern: true
+		}, function () {
+			console.log('Option Saved')
+			optmodern = true
+		});
+	} else {
+		optmodern = result.optmodern;
+	};
+});
+chrome.storage.sync.get(['optpause'], function (result) {
+	if (result.optpause === undefined) {
+		chrome.storage.sync.set({
+			optpause: false
+		}, function () {
+			console.log('Option Saved')
+			optpause = false
+		});
+	} else {
+		optpause = result.optpause;
+	};
+});
+
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 	// if the user navigates to a new page on youtube
 	// youtube dynamically updates page instead of changing paths (usually)
