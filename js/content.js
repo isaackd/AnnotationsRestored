@@ -1,6 +1,8 @@
 const annotationParser = new AnnotationParser();
 let renderer;
 
+const postMessageOrigin = "https://www.youtube.com";
+
 function setupExternalScript() {
 	// must be done this way due to the "x-ray" mode the content scripts are run in
 	// removing all non-standard functions from the player, such as getCurrentTime :/
@@ -285,7 +287,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	} 
 	else if (request.type === "remove_renderer_annotations") {
 		if (renderer) {
-			renderer.stop();
+			np_stopRenderer();
 			renderer.removeAnnotationElements();
 		}
 	}
@@ -294,7 +296,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		console.info("loading youtube data");
 		const annotationDom = annotationParser.xmlToDom(request.data);
 		const annotationElements = annotationDom.getElementsByTagName("annotation");
-		const annotations = annotationParser.parseYoutubeFormat(annotationElements);
+		const annotations = annotationParser.parseYoutubeAnnotationList(annotationElements);
 		if (!renderer) {
 			startNewAnnotationRenderer(annotations);
 		} 
@@ -316,6 +318,26 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 function startNewAnnotationRenderer(annotations) {
 	const videoContainer = document.getElementById("movie_player");
-	renderer = new AnnotationRenderer(annotations, videoContainer, "https://www.youtube.com/");
-	renderer.start();
+	renderer = new AnnotationRenderer(annotations, videoContainer);
+}
+
+window.addEventListener("__annotations_restored_renderer_update", e => {
+	if (renderer && !isNaN(e.detail.videoTime)) {
+		renderer.update(e.detail.videoTime);
+	}
+});
+window.addEventListener("__ar_seek_to", e => {
+	if (renderer && !isNaN(e.detail.seconds)) {
+		np_seekTo(e.detail.seconds);
+	}
+});
+
+function np_startRenderer() {
+	window.postMessage({type: "__annotations_restored_renderer_start", updateInterval: 1000}, postMessageOrigin);
+}
+function np_stopRenderer() {
+	window.postMessage({type: "__annotations_restored_renderer_stop"}, postMessageOrigin);
+}
+function np_seekTo(seconds) {
+	window.postMessage({type: "__annotations_restored_renderer_seek_to", seconds}, postMessageOrigin);
 }
