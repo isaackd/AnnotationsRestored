@@ -301,7 +301,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			startNewAnnotationRenderer(annotations);
 		} 
 		else {
-			renderer.changeAnnotationData(annotations);
+			changeAnnotationData(annotations);
 		}
 	} 
 	else if (request.type === "popup_load_converted" && request.data) {
@@ -311,7 +311,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			startNewAnnotationRenderer(annotations);
 		} 
 		else {
-			renderer.changeAnnotationData(annotations);
+			changeAnnotationData(annotations);
 		}
 	}
 });
@@ -331,6 +331,14 @@ window.addEventListener("__ar_seek_to", e => {
 		np_seekTo(e.detail.seconds);
 	}
 });
+
+function changeAnnotationData(annotations) {
+	np_stopRenderer();
+	renderer.removeAnnotationElements();
+	renderer.annotations = annotations;
+	renderer.createAnnotationElements();
+	np_startRenderer();
+}
 
 function np_startRenderer() {
 	window.postMessage({type: "__annotations_restored_renderer_start", updateInterval: 1000}, postMessageOrigin);
