@@ -278,7 +278,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			const annotationDom = annotationParser.xmlToDom(annotationData);
 			const annotationElements = annotationDom.getElementsByTagName("annotation");
 
-			const annotations = annotationParser.parseYoutubeFormat(annotationElements);
+			const annotations = annotationParser.parseYoutubeAnnotationList(annotationElements);
 			startNewAnnotationRenderer(annotations);
 		}
 	} 
