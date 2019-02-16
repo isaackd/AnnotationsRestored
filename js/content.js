@@ -90,17 +90,22 @@ function setupExternalScript() {
 			const updateEvent = new CustomEvent("__annotations_restored_renderer_update", {
 				detail: {videoTime}
 			});
-			window.dispatchEvent(updateEvent)
+			window.dispatchEvent(updateEvent);
 		}
 
 		function __ar__seekTo(seconds) {
 			player.seekTo(seconds);
 			const videoTime = player.getCurrentTime();
-			const updateEvent = new CustomEvent("__annotations_restored_renderer_update", {
-				detail: {videoTime}
-			});
-			window.dispatchEvent(updateEvent)
+			__ar__updateAnnotations();
 		}
+		function __ar__updateAnnotationSizes() {
+			const updateSizeEvent = new CustomEvent("__annotations_restored_renderer_update_sizes");
+			window.dispatchEvent(updateSizeEvent);
+		}
+
+		window.addEventListener("resize", () => {
+			__ar__updateAnnotationSizes();
+		});
 	`;
 
 	const script = document.createElement("script");
@@ -319,6 +324,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 function startNewAnnotationRenderer(annotations) {
 	const videoContainer = document.getElementById("movie_player");
 	renderer = new AnnotationRenderer(annotations, videoContainer);
+	np_startRenderer();
 }
 
 window.addEventListener("__annotations_restored_renderer_update", e => {
@@ -331,12 +337,19 @@ window.addEventListener("__ar_seek_to", e => {
 		np_seekTo(e.detail.seconds);
 	}
 });
+window.addEventListener("__annotations_restored_renderer_update_sizes", () => {
+	if (renderer) {
+		renderer.updateAllAnnotationSizes()
+	}
+});
 
 function changeAnnotationData(annotations) {
 	np_stopRenderer();
 	renderer.removeAnnotationElements();
 	renderer.annotations = annotations;
 	renderer.createAnnotationElements();
+	renderer.updateAllAnnotationSizes();
+	renderer.update();
 	np_startRenderer();
 }
 
