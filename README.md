@@ -1,7 +1,7 @@
 ## Annotations Restored
 **Brings annotation support back to YouTube**
 
-**If you are on a Firefox based browser and would like to view annotations as if they were never removed from YouTube at all (uses YouTube's own rendering code), you can instead download [AnnotationsReloaded](https://addons.mozilla.org/firefox/addon/annotationsreloaded/). It will however eventually stop working whenever YouTube decides to remove their annotation rendering code.**
+\***If you are on a Firefox based browser and would like to view annotations as if they were never removed from YouTube at all (uses YouTube's own rendering code), you can instead download [AnnotationsReloaded](https://addons.mozilla.org/firefox/addon/annotationsreloaded/). It will however eventually stop working whenever YouTube decides to remove their annotation rendering code.**
 
 ![Demonstration of Annotations Restored](https://github.com/afrmtbl/AnnotationsRestored/blob/master/demo.gif)**
 
