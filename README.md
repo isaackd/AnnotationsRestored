@@ -55,8 +55,8 @@ Each videos annotations consist of a list of annotations. Annotations are separa
 * `t`: the text of the annotation. Note that text must be url-encoded (use `%20` for space, etc.).
 #### Optional Properties
 * `as`: the time in seconds to jump to within a video for an annotation with an in-video link.
-* `at`: the action type.
-* `au`: the action url.
+* `at`: the action type. Note that text must be url-encoded (use `%20` for space, etc.).
+* `au`: the action url. Possible values include `url`.
 * `aut`: the action target. Possible values include `new` tab/window and `current` tab/window.
 * `sx`: the speech bubble point position x in percent of the width of the video.
 * `sy`: the speech bubble point position y in percent of the height of the video.
