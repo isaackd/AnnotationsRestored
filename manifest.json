@@ -8,7 +8,7 @@
 
     "permissions": [
         "tabs",
-		"https://archive.omar.yt/api/v1/annotations/*",
+		"https://invidio.us/api/v1/annotations/*",
 		"https://gist.githubusercontent.com/*/raw/*",
         "https://pastebin.com/raw/*"
     ],
