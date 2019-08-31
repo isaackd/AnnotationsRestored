@@ -39,6 +39,11 @@ Annotations Restored uses a different format than YouTube used for annotations. 
 
 Each videos annotations consist of a list of annotations. Annotations are separated by the `;` character, with no spaces. Each annotation consists of a set of properties, separated by the `,` character, also with no spaces. Between each property and value is a `=` symbol. The properties for annotations are the following:
 #### Required Properties.
+* `bgc`: the annotation background color in decimal form.
+* `bgo`: the opacity of the background as a decimal (range from 0 to 1, inclusive).
+* `fgc`: the annotation foreground color in decimal form.
+* `fgo`: the opacity of the foreground as a decimal (range from 0 to 1, inclusive).
+* `txsz`: the size of the text as a percent of the video height.
 * `x`: the x coordinate of the annotation in percent of the width of the video.
 * `y`: the y coordinate of the annotation in percent of the height of the video.
 * `w`: the width of the annotation in percent of the width of the video.
@@ -47,8 +52,13 @@ Each videos annotations consist of a list of annotations. Annotations are separa
 * `te`: the end of the time the annotation is displayed on screen in seconds.
 * `tp`: the type of the annotation. Possible values include `text` and `pause`.
 * `s` : the style of the annotation. Possible values include `speech`, `popup`, `highlightText`, `anchored`, and `branding`.
-* `t`: the text of the annotation. Note that text must be url-encoded (use `%20` for space).
+* `t`: the text of the annotation. Note that text must be url-encoded (use `%20` for space, etc.).
 #### Optional Properties
 * `as`: the time in seconds to jump to within a video for an annotation with an in-video link.
+* `at`: the action type. Note that text must be url-encoded (use `%20` for space, etc.).
+* `au`: the action url. Possible values include `url`.
+* `aut`: the action target. Possible values include `new` tab/window and `current` tab/window.
+* `sx`: the speech bubble point position x in percent of the width of the video.
+* `sy`: the speech bubble point position y in percent of the height of the video.
 
 A `;` character must appear after the final annotation.
