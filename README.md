@@ -1,9 +1,9 @@
 ## Annotations Restored
-**Brings annotation support back to YouTube
+**Brings annotation support back to YouTube**
+
+\**If you are on a Firefox based browser and would like to view annotations as if they were never removed from YouTube at all (uses YouTube's own rendering code), you can instead download [AnnotationsReloaded](https://addons.mozilla.org/firefox/addon/annotationsreloaded/). It will however eventually stop working whenever YouTube decides to remove their annotation rendering code.*
+
 ![Demonstration of Annotations Restored](https://github.com/afrmtbl/AnnotationsRestored/blob/master/demo.gif)**
-
-
-\**Currently only works with a temporary, partial API or the [custom format](#restoring-annotations-on-old-videos) in the description of a YouTube video until the [archival efforts](https://www.reddit.com/r/DataHoarder/comments/aa6czg/youtube_annotation_archive/) of [/u/omarroth](https://www.reddit.com/user/omarroth) make it into an API. In the meantime, for older videos, you can [place the converted annotation data into the description of your video](#restoring-annotations-on-old-videos) - ([example](https://imgur.com/1ubx6B8))*
 
 On January 15 2019, YouTube decided to discontinue annotations. While the feature was frequently abused, it did have many legitimate use cases, such as games, corrections, and a form of commentary that could be toggled on and off. The removal left many older videos obsolete. **Annotations Restored** aims to fix this.
 
@@ -38,7 +38,7 @@ As I currently don't have access to a server to store new annotation data, it mu
 Annotations Restored uses a different format than YouTube used for annotations. The Annotations Restored format is generally more compact than the YouTube annotations format.
 
 Each videos annotations consist of a list of annotations. Annotations are separated by the `;` character, with no spaces. Each annotation consists of a set of properties, separated by the `,` character, also with no spaces. Between each property and value is a `=` symbol. The properties for annotations are the following:
-#### Required Properties
+#### Required Properties.
 * `x`: the x coordinate of the annotation in percent of the width of the video.
 * `y`: the y coordinate of the annotation in percent of the height of the video.
 * `w`: the width of the annotation in percent of the width of the video.

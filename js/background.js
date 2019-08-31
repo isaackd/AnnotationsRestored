@@ -15,7 +15,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
 		if (videoId) {
 			chrome.tabs.sendMessage(tab.id, {type: "check_description_for_annotations"}, response => {
-				if (!response.foundAnnotations) {
+				if (!response || !response.foundAnnotations) {
 					console.log(response);
 					const requestUrl = annotationsEndpoint + videoId;
 					console.info(`Loading annotations for '${videoId}' from '${requestUrl}'`);

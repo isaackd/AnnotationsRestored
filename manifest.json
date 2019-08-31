@@ -2,14 +2,14 @@
     "manifest_version": 2,
     "name": "Annotations Restored for YouTube™",
     "short_name": "Annotations Restored",
-    "version": "0.0.4",
+    "version": "0.0.5",
 
     "description": "Brings annotation support back to YouTube™!",
 
     "permissions": [
         "tabs",
 		"https://archive.omar.yt/api/v1/annotations/*",
-		"https://gist.githubusercontent.com/*",
+		"https://gist.githubusercontent.com/*/raw/*",
         "https://pastebin.com/raw/*"
     ],
     "browser_action": {
@@ -19,8 +19,8 @@
 
     "content_scripts": [{
         "matches": ["*://www.youtube.com/watch?*"],
-        "js": ["js/AnnotationParser.js", "js/AnnotationRenderer.js", "js/content.js"],
-        "css": ["css/styles.css"]
+        "js": ["js/annotationlib/AnnotationParser.js", "js/annotationlib/AnnotationRenderer.js", "js/content.js"],
+        "css": ["js/annotationlib/AnnotationRenderer.css"]
     }],
     "background": {
         "scripts":["js/background.js"]
