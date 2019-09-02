@@ -42,7 +42,6 @@ Each videos annotations consist of a list of annotations. Annotations are separa
 * `bgc`: the annotation background color in decimal form.
 * `bgo`: the opacity of the background as a decimal (range from 0 to 1, inclusive).
 * `fgc`: the annotation foreground color in decimal form.
-* `fgo`: the opacity of the foreground as a decimal (range from 0 to 1, inclusive).
 * `txsz`: the size of the text as a percent of the video height.
 * `x`: the x coordinate of the annotation in percent of the width of the video.
 * `y`: the y coordinate of the annotation in percent of the height of the video.
