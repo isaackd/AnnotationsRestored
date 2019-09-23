@@ -64,9 +64,6 @@ function setupExternalScript() {
 			else if (type === "__annotations_restored_renderer_seek_to") {
 				__ar__seekTo(data.seconds);
 			}
-			else if (type === "__annotations_restored_renderer_urlclick") {
-				window.location.href = data.url;
-			}
 		});
 
 		function __ar__startRenderer(updateInterval) {
@@ -337,6 +334,13 @@ window.addEventListener("__ar_seek_to", e => {
 		np_seekTo(e.detail.seconds);
 	}
 });
+
+window.addEventListener("__ar_annotation_click", e => {
+    const url = e.detail.url;
+    // redirect to the url
+    window.location.href = url;
+});
+
 window.addEventListener("__annotations_restored_renderer_update_sizes", () => {
 	if (renderer) {
 		renderer.updateAllAnnotationSizes()
