@@ -1,4 +1,3 @@
-// testing endpoint until an actual api with all the annotation data is available
 const annotationsEndpoint = "https://invidio.us/api/v1/annotations/";
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
