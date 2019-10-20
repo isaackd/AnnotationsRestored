@@ -1,5 +1,6 @@
 const annotationParser = new AnnotationParser();
 let renderer;
+let adPlaying = false;
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	console.log(request);
@@ -85,6 +86,48 @@ function startNewAnnotationRenderer(annotations) {
 
 	renderer = new AnnotationRenderer(annotations, videoContainer, playerOptions, 200);
 	renderer.start();
+
+	if (videoContainer.classList.contains("ad-showing")) {
+		adPlaying = true;
+		renderer.annotationsContainer.style.display = "none";
+	}
+	else if (!player.classList.contains("ad-showing") && adPlaying) {
+		adPlaying = false;
+		renderer.annotationsContainer.style.display = "block";
+	}
+
+	hideAnnotationsDuringAds(videoContainer);
+}
+
+// https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
+function hideAnnotationsDuringAds(player) {
+	// Select the node that will be observed for mutations
+	const targetNode = player;
+
+	// Options for the observer (which mutations to observe)
+	const config = { attributes: true, atrributeFilter: ["class"]};
+
+	// Callback function to execute when mutations are observed
+	const callback = function(mutationsList, observer) {
+		for (let mutation of mutationsList) {
+			// ad begins playing
+			if (player.classList.contains("ad-showing") && !adPlaying) {
+				adPlaying = true;
+				renderer.annotationsContainer.style.display = "none";
+			}
+			// ad is done playing
+			else if (!player.classList.contains("ad-showing") && adPlaying) {
+				adPlaying = false;
+				renderer.annotationsContainer.style.display = "block";
+			}
+		}
+	};
+
+	// Create an observer instance linked to the callback function
+	const observer = new MutationObserver(callback);
+
+	// Start observing the target node for configured mutations
+	observer.observe(targetNode, config);
 }
 
 window.addEventListener("__ar_annotation_click", e => {
