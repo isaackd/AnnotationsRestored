@@ -19,7 +19,15 @@
 
     "content_scripts": [{
         "matches": ["*://www.youtube.com/watch?*"],
-        "js": ["js/annotationlib/dist/AnnotationParser.js", "js/annotationlib/dist/AnnotationRenderer.js", "js/content.js"],
+        "js": [
+            "js/annotationlib/dist/AnnotationParser.js", 
+            "js/annotationlib/dist/AnnotationRenderer.js", 
+
+            "js/annotation_sources/description.js",
+            "js/annotation_sources/gist.js",
+            "js/annotation_sources/pastebin.js",
+            "js/content.js"
+        ],
         "css": ["js/annotationlib/dist/AnnotationRenderer.css"]
     }],
     "background": {
