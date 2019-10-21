@@ -3,7 +3,7 @@
 
 \**If you are on a Firefox based browser and would like to view annotations as if they were never removed from YouTube at all (uses YouTube's own rendering code), you can instead download [AnnotationsReloaded](https://addons.mozilla.org/firefox/addon/annotationsreloaded/). It will however eventually stop working whenever YouTube decides to remove their annotation rendering code.*
 
-![Demonstration of Annotations Restored](https://github.com/afrmtbl/AnnotationsRestored/blob/master/demo.gif)**
+![Demonstration of Annotations Restored](https://github.com/afrmtbl/AnnotationsRestored/blob/master/demo.gif)
 
 On January 15 2019, YouTube decided to discontinue annotations. While the feature was frequently abused, it did have many legitimate use cases, such as games, corrections, and a form of commentary that could be toggled on and off. The removal left many older videos obsolete. **Annotations Restored** aims to fix this.
 
@@ -18,6 +18,10 @@ This extension will be published to the [Chrome Web Store](https://chrome.google
 
 **Firefox**
 
+Install from [addons.mozilla.org](addons.mozilla.org)
+1. https://addons.mozilla.org/en-US/firefox/addon/annotations-restored/
+
+Install from source
 1. Download the [latest release of the extension](https://github.com/afrmtbl/AnnotationsRestored/releases)
 2. Go to [about:debugging#addons](about:debugging#addons), click "Load Temporary Add-on"
 3. Select **ext.zip**.
