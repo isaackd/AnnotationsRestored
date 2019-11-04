@@ -8,6 +8,10 @@ On January 15 2019, YouTube decided to discontinue annotations. While the featur
 ## Installation
 **Google Chrome/Opera/Vivaldi/Chromium**
 
+Install from [Chrome Webstore](chrome.google.com/webstore)
+1. https://chrome.google.com/webstore/detail/annotations-restored-for/daabpdmgkghdbfljmeahnplkcldbeefg
+
+Install from source
 1. Download the [latest release of the extension](https://github.com/afrmtbl/AnnotationsRestored/releases) 
 2. Go to [chrome://extensions](chrome://extensions), enable the "Developer Mode" option in the top right and reload the page.
 4. Drag **ext.zip** onto the window to install it. 
