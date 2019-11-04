@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Annotations Restored for YouTube™",
     "short_name": "Annotations Restored",
-    "version": "0.0.6",
+    "version": "0.0.7",
 
     "description": "Brings annotation support back to YouTube™!",
 
@@ -12,6 +12,13 @@
 		"https://gist.githubusercontent.com/*/raw/*",
         "https://pastebin.com/raw/*"
     ],
+
+    "icons": {
+    	"32": "icons/icon16.png",
+    	"48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+
     "browser_action": {
         "default_title": "Annotations Restored",
         "default_popup": "popup/index.html"
