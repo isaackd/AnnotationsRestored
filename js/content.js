@@ -1,10 +1,24 @@
+let currentVideoID;
+
 const annotationParser = new AnnotationParser();
 let renderer;
 let adPlaying = false;
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-	console.log(request);
-	if (request.type === "check_description_for_annotations") {
+	if (request.message === "video_change") {
+		const currentUrl = new URL(document.URL);
+		const videoId = currentUrl.searchParams.get("v");
+
+		const isYoutubeWatchUrl = document.URL.startsWith("https://www.youtube.com/watch?");
+		if (videoId && videoId.length === 11 && videoId !== currentVideoID && isYoutubeWatchUrl) {
+			currentVideoID = videoId;
+			sendResponse(videoId);
+		}
+		else {
+			sendResponse(false);
+		}
+	}
+	else if (request.type === "check_description_for_annotations") {
 		getFirstValidDescriptionAnnotations().then(data => {
 			startNewAnnotationRenderer(data.annotations);
 			console.info(`Found ${data.type} annotation data in description`);
@@ -108,7 +122,7 @@ function hideAnnotationsDuringAds(player) {
 	const config = { attributes: true, atrributeFilter: ["class"]};
 
 	// Callback function to execute when mutations are observed
-	const callback = function(mutationsList, observer) {
+	const callback = function(mutationsList) {
 		for (let mutation of mutationsList) {
 			// ad begins playing
 			if (player.classList.contains("ad-showing") && !adPlaying) {
@@ -139,7 +153,7 @@ window.addEventListener("__ar_annotation_click", e => {
 function updateAnnotationSizes(delay = 0) {
 	setTimeout(() => {
 		if (renderer) {
-			renderer.updateAllAnnotationSizes()
+			renderer.updateAllAnnotationSizes();
 		}
 	}, delay);
 }
