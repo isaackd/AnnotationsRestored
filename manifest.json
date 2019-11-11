@@ -7,7 +7,6 @@
     "description": "Brings annotation support back to YouTube™!",
 
     "permissions": [
-        "tabs",
 		"https://invidio.us/api/v1/annotations/*",
 		"https://gist.githubusercontent.com/*/raw/*",
         "https://pastebin.com/raw/*"
