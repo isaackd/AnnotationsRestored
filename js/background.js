@@ -18,8 +18,16 @@ function fetchVideoAnnotations(videoId) {
 
 function descriptionHasAnnotations(tabId) {
 	const messageType = "check_description_for_annotations";
-	chrome.tabs.sendMessage(tabId, {type: messageType}, response => {
-		return (response && response.foundAnnotations);
+
+	return new Promise((resolve, reject) => {
+		chrome.tabs.sendMessage(tabId, {type: messageType}, response => {
+			if (response && response.foundAnnotations) {
+				resolve();
+			}
+			else {
+				reject();
+			}
+		});
 	});
 }
 
@@ -28,7 +36,10 @@ function handleVideoUpdate(tabId, videoId) {
 		type: "remove_renderer_annotations"
 	});
 
-	if (!descriptionHasAnnotations(tabId)) {
+	descriptionHasAnnotations(tabId).then(() => {
+		console.info(`Annotations found in description (${videoId})..`);
+	}).catch(() => {
+		console.info(`Annotations not found in description, fetching from server.. (${videoId})`);
 		fetchVideoAnnotations(videoId).then(text => {
 			console.info(`Received annotations for ${videoId} from server..`);
 			chrome.tabs.sendMessage(tabId, {
@@ -41,10 +52,7 @@ function handleVideoUpdate(tabId, videoId) {
 				type: "annotations_unavailable"
 			});
 		});
-	}
-	else {
-		console.info(`Annotations found in description (${videoId})..`);
-	}
+	});
 }
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {

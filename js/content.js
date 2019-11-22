@@ -19,6 +19,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		}
 	}
 	else if (request.type === "check_description_for_annotations") {
+		console.info("Checking description for annotations...");
 		getFirstValidDescriptionAnnotations().then(data => {
 			startNewAnnotationRenderer(data.annotations);
 			console.info(`Found ${data.type} annotation data in description`);
@@ -27,6 +28,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			});
 		}).catch(e => {
 			console.info(e);
+			console.info(`Retrieving annotations for the current video...`);
 			sendResponse({
 				foundAnnotations: false
 			});
