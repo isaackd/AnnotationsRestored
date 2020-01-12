@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Annotations Restored for YouTube™",
     "short_name": "Annotations Restored",
-    "version": "0.0.8",
+    "version": "0.0.9",
 
     "description": "Brings annotation support back to YouTube™!",
 
@@ -17,6 +17,10 @@
     	"48": "icons/icon48.png",
         "128": "icons/icon128.png"
     },
+
+    "web_accessible_resources": [
+        "icons/speech.svg"
+    ],
 
     "browser_action": {
         "default_title": "Annotations Restored",
