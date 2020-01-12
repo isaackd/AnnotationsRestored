@@ -8,11 +8,12 @@ waitForControls().then(el => {
 	const progressButton = document.createElement("button");
 	progressButton.classList.add("ytp-button", "ytp-settings-button");
 
-	const imgUrl = chrome.runtime.getURL("icons/speech.svg");
-	progressButton.style.backgroundImage = `url(${imgUrl})`;
-	progressButton.style.backgroundRepeat = "no-repeat";
-	progressButton.style.backgroundPosition = "center";
-	progressButton.style.backgroundSize = "20px 20px";
+	progressButton.innerHTML = `
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="white" viewBox="0 0 36 36">
+    <path transform="translate(6.5, 6.5)" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
+    <path d="M0 0h24v24H0z" fill="none" />
+</svg>
+	`;
 
 	progressButton.setAttribute("title", "Annotations aren't found");
 	progressButton.setAttribute("aria-label", "Annotations aren't found");
@@ -101,7 +102,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			console.info(e);
 			console.info(`Retrieving annotations for the current video...`);
 			window.dispatchEvent(new CustomEvent("ar-status-change", {
-				detail: "Retrieving annotations for the current video..."
+				detail: "Retrieving annotations for the current video...\nThis may sometimes take a little while."
 			}));
 
 
