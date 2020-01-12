@@ -18,10 +18,6 @@
         "128": "icons/icon128.png"
     },
 
-    "web_accessible_resources": [
-        "icons/speech.svg"
-    ],
-
     "browser_action": {
         "default_title": "Annotations Restored",
         "default_popup": "popup/index.html"
