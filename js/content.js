@@ -4,8 +4,74 @@ const annotationParser = new AnnotationParser();
 let renderer;
 let adPlaying = false;
 
+waitForControls().then(el => {
+	const progressButton = document.createElement("button");
+	progressButton.classList.add("ytp-button", "ytp-settings-button");
+
+	const imgUrl = chrome.runtime.getURL("icons/speech.svg");
+	progressButton.style.backgroundImage = `url(${imgUrl})`;
+	progressButton.style.backgroundRepeat = "no-repeat";
+	progressButton.style.backgroundPosition = "center";
+	progressButton.style.backgroundSize = "20px 20px";
+
+	progressButton.setAttribute("title", "Annotations aren't found");
+	progressButton.setAttribute("aria-label", "Annotations aren't found");
+
+	el.prepend(progressButton);
+
+	progressButton.addEventListener("click", () => {
+		if (renderer && renderer.annotations.length) {
+			const times = renderer.annotations
+				.filter(an => an.data && an.data.hasOwnProperty("timeStart"))
+				.sort((a, b) => a.data.timeStart - b.data.timeStart)
+				.map(an => {
+					let type = an.data.type;
+					let style = an.data.style;
+
+					type = type ? type : "";
+					style = style ? ", " + style : "";
+
+					const sec = formatSeconds(an.data.timeStart);
+
+					return `${sec} ${type}${style}`;
+				}).join("\n");
+
+			alert(times);
+		}
+		else {
+			alert("There are no annotations loaded.");
+		}
+	});
+
+	window.addEventListener("ar-status-change", e => {
+		progressButton.setAttribute("title", e.detail);
+		progressButton.setAttribute("aria-label", e.detail);
+	});
+}).catch(() => {
+	console.warn("Unable to find controls area");
+});
+
+function formatSeconds(sec) {
+    const minutes = Math.floor(sec / 60);
+    const seconds = Math.floor(sec % 60);
+
+    const minPadding = minutes < 10 ? "0" : "";
+    const secPadding = seconds < 10 ? "0" : "";
+
+    return `${minPadding}${minutes}:${secPadding}${seconds}`;
+}
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	if (request.message === "video_change") {
+
+		if (renderer && renderer.annotations) {
+			renderer.annotations = [];
+		}
+
+		window.dispatchEvent(new CustomEvent("ar-status-change", {
+			detail: "Video changing..."
+		}));
+
 		const currentUrl = new URL(document.URL);
 		const videoId = currentUrl.searchParams.get("v");
 
@@ -20,6 +86,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	}
 	else if (request.type === "check_description_for_annotations") {
 		console.info("Checking description for annotations...");
+		window.dispatchEvent(new CustomEvent("ar-status-change", {
+			detail: "Checking description for annotations..."
+		}));
+
+
 		getFirstValidDescriptionAnnotations().then(data => {
 			startNewAnnotationRenderer(data.annotations);
 			console.info(`Found ${data.type} annotation data in description`);
@@ -29,6 +100,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		}).catch(e => {
 			console.info(e);
 			console.info(`Retrieving annotations for the current video...`);
+			window.dispatchEvent(new CustomEvent("ar-status-change", {
+				detail: "Retrieving annotations for the current video..."
+			}));
+
+
 			sendResponse({
 				foundAnnotations: false
 			});
@@ -40,6 +116,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		const annotationData = request.xml;
 		if (annotationData) {
 			console.info("Received annotation data from server");
+			window.dispatchEvent(new CustomEvent("ar-status-change", {
+				detail: "Received annotation data from server. Annotations should now be loaded.\nClick to see annotation times."
+			}));
+
+
 			const annotationDom = annotationParser.xmlToDom(annotationData);
 			const annotationElements = annotationDom.getElementsByTagName("annotation");
 
@@ -49,6 +130,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	} 
 	else if (request.type === "annotations_unavailable") {
 		console.info("Annotation data for this video is unavailable");
+		window.dispatchEvent(new CustomEvent("ar-status-change", {
+			detail: "Annotations are not available for this video."
+		}));
 	} 
 	else if (request.type === "remove_renderer_annotations") {
 		if (renderer) {
@@ -172,4 +256,30 @@ function changeAnnotationData(annotations) {
 	renderer.updateAllAnnotationSizes();
 	renderer.update();
 	renderer.start();
+}
+
+function waitForControls() {
+	return new Promise((resolve, reject) => {
+		const maxRetries = 10;
+		let currentRetries = 0;
+		let intervalAmount = 200;
+
+		const progInt = setInterval(() => {
+			currentRetries++;
+			intervalAmount += 200;
+
+			if (currentRetries > maxRetries) {
+				reject();
+				clearInterval(progInt);
+				return;
+			}
+
+			const el = document.querySelector(".ytp-right-controls");
+			if (el) {
+				resolve(el);
+				clearInterval(progInt);
+				return;
+			}
+		}, intervalAmount);
+	});
 }
