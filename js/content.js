@@ -4,7 +4,7 @@ const annotationParser = new AnnotationParser();
 let renderer;
 let adPlaying = false;
 
-waitForControls().then(el => {
+waitForElement(".ytp-right-controls").then(el => {
 	const progressButton = document.createElement("button");
 	progressButton.classList.add("ytp-button", "ytp-settings-button");
 
@@ -65,10 +65,6 @@ function formatSeconds(sec) {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	if (request.message === "video_change") {
 
-		if (renderer && renderer.annotations) {
-			renderer.annotations = [];
-		}
-
 		window.dispatchEvent(new CustomEvent("ar-status-change", {
 			detail: "Video changing..."
 		}));
@@ -77,9 +73,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		const videoId = currentUrl.searchParams.get("v");
 
 		const isYoutubeWatchUrl = document.URL.startsWith("https://www.youtube.com/watch?");
+
 		if (videoId && videoId.length === 11 && videoId !== currentVideoID && isYoutubeWatchUrl) {
 			currentVideoID = videoId;
 			sendResponse(videoId);
+
+			if (renderer) {
+				renderer.removeAnnotationElements();
+				renderer.annotations = [];
+			}
 		}
 		else {
 			sendResponse(false);
@@ -99,7 +101,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 				foundAnnotations: true
 			});
 		}).catch(e => {
-			console.info(e);
 			console.info(`Retrieving annotations for the current video...`);
 			window.dispatchEvent(new CustomEvent("ar-status-change", {
 				detail: "Retrieving annotations for the current video...\nThis may sometimes take a little while."
@@ -143,7 +144,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	}
 	// popup annotation loading
 	else if (request.type === "popup_load_youtube" && request.data) {
-		console.info("loading youtube data");
+		console.info("Loading youtube data");
 		const annotationDom = annotationParser.xmlToDom(request.data);
 		const annotationElements = annotationDom.getElementsByTagName("annotation");
 		const annotations = annotationParser.parseYoutubeAnnotationList(annotationElements);
@@ -155,7 +156,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		}
 	} 
 	else if (request.type === "popup_load_converted" && request.data) {
-		console.info("loading converted data");
+		console.info("Loading converted data");
 		const annotations = annotationParser.deserializeAnnotationList(request.data);
 		if (!renderer) {
 			startNewAnnotationRenderer(annotations);
@@ -259,15 +260,13 @@ function changeAnnotationData(annotations) {
 	renderer.start();
 }
 
-function waitForControls() {
+function waitForElement(selector, maxRetries=10, intervalAmount=200, intervalStep=200) {
 	return new Promise((resolve, reject) => {
-		const maxRetries = 10;
 		let currentRetries = 0;
-		let intervalAmount = 200;
 
 		const progInt = setInterval(() => {
 			currentRetries++;
-			intervalAmount += 200;
+			intervalAmount += intervalStep;
 
 			if (currentRetries > maxRetries) {
 				reject();
@@ -275,7 +274,7 @@ function waitForControls() {
 				return;
 			}
 
-			const el = document.querySelector(".ytp-right-controls");
+			const el = document.querySelector(selector);
 			if (el) {
 				resolve(el);
 				clearInterval(progInt);
@@ -284,3 +283,4 @@ function waitForControls() {
 		}, intervalAmount);
 	});
 }
+
