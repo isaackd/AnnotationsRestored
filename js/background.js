@@ -1,4 +1,4 @@
-const annotationsEndpoint = "https://invidio.us/api/v1/annotations/";
+const annotationsEndpoint = "https://invidious.snopyta.org/api/v1/annotations/";
 
 function fetchVideoAnnotations(videoId) {
 	if (videoId.length !== 11) { throw new Error("Video ID must be exactly 11 characters long"); }
