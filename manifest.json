@@ -2,14 +2,14 @@
     "manifest_version": 2,
     "name": "Annotations Restored for YouTube™",
     "short_name": "Annotations Restored",
-    "version": "0.0.9",
+    "version": "0.0.10",
 
     "description": "Brings annotation support back to YouTube™!",
 
     "permissions": [
-		"https://invidio.us/api/v1/annotations/*",
+		"https://invidious.snopyta.org/api/v1/annotations/*",
 		"https://gist.githubusercontent.com/*/raw/*",
-        "https://pastebin.com/raw/*"
+        	"https://pastebin.com/raw/*"
     ],
 
     "icons": {
