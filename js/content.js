@@ -284,3 +284,34 @@ function waitForElement(selector, maxRetries=10, intervalAmount=200, intervalSte
 	});
 }
 
+// Adding annotation visibility switch to settings menu, just like in ye olden days
+waitForElement(".ytp-panel-menu").then(el => {
+	const annoSwitchPar = document.createElement("div");
+	annoSwitchPar.className = "ytp-menuitem";
+	annoSwitchPar.innerHTML = `
+	<div class="ytp-menuitem-icon"></div>
+	<div class="ytp-menuitem-label">Annotations</div>
+	<div class="ytp-menuitem-content">
+		<div class="ytp-menuitem-toggle-checkbox">
+		<input type="checkbox" id="annotation-sneaky-switch" aria-hidden="true" style="position: absolute; left: -100vw;">
+		</div>
+	</div>
+	`;
+	annoSwitchPar.setAttribute("role", "menuitemcheckbox");
+	annoSwitchPar.setAttribute("aria-checked", "true");
+	annoSwitchPar.setAttribute("tabindex", "0");
+
+	el.prepend(annoSwitchPar);
+
+/* 	a visually-hidden input checkbox (annoSneakySwitch) is used to store the state of annotation visibility.
+	the same thing could be done with some craftier JS but checkboxes are very certain and difficult to screw up */
+
+	const annoSneakySwitch = document.querySelector('#annotation-sneaky-switch');
+	annoSneakySwitch.checked = true;
+	annoSwitchPar.addEventListener('click', () => {
+		annoSneakySwitch.click()
+		annoSneakySwitch.checked ? annoSwitchPar.setAttribute("aria-checked", "true", renderer.annotationsContainer.style.display = "block") : (annoSwitchPar.setAttribute("aria-checked", "false"), renderer.annotationsContainer.style.display = "none")
+	})
+}).catch(() => {
+	console.warn("Unable to find the video player settings menu, annotation switch not injected");
+});
