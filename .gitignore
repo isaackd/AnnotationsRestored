@@ -1,2 +1,6 @@
-
+node_modules/
+jspm_packages/
 *.zip
+.env
+.env.test
+.env.production

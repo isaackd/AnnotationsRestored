@@ -5,18 +5,27 @@
 	<link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
-	<h3>YouTube Annotation Data</h3>
-	<input id="youtube-file" type="file">
-	<textarea id="youtube-data" placeholder="YouTube Annotation Data..."></textarea>
-	<h3>Converted YouTube Annotation Data</h3>
-	<input id="converted-file" type="file">
-	<textarea id="converted-data" placeholder="Converted YouTube Annotation Data..."></textarea>
+	<main>
+		<details>
+			<summary>Add raw annotation data</summary>
+			<label for="youtube-file" class="fake-btn">
+				<span>Upload raw data</span>
+			</label>
+			<input id="youtube-file" type="file"/>
+			<textarea id="youtube-data" placeholder="Or paste raw annotation data" rows="3"></textarea>
+			<button id="load-youtube">Load</button>
+		</details>
+		<details open>
+			<summary>Add converted annotations</summary>
+			<label for="converted-file" class="fake-btn">
+				<span>Upload converted data</span>
+			</label>
+			<input id="converted-file" type="file"/>
+			<textarea id="converted-data" placeholder="Or paste converted annotation data" rows="3"></textarea>
+			<button id="load-converted">Load</button>
+		</details>
+	</main>
 
-	<div id="buttons">
-		<input id="load-youtube" type="button" value="Load YouTube Data">
-		<input id="load-converted" type="button" value="Load Converted Data">
-	</div>
-
-	<script type="text/javascript" src="index.js"></script>
+	<script defer type="text/javascript" src="index.js"></script>
 </body>
 </html>
