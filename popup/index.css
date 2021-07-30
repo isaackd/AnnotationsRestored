@@ -38,7 +38,6 @@ button, .fake-btn {
   border: 1px solid rgba(0,0,0,0.16);
   border-radius: .25rem;
   color: var(--text);
-  font-family: "Inter", ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
   font-size: .875rem;
   font-weight: 600;
   padding: .3rem .75rem;
@@ -52,7 +51,7 @@ button, .fake-btn {
 
 .fake-btn:hover { background-color: hsl(220, 30%, 90%); }
 
-.fake-btn:focus {
+.fake-btn:focus, button:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
@@ -66,12 +65,6 @@ button {
 
 button:hover { background-color: hsl(210, 80%, 55%); }
 
-button:focus {
-  box-shadow: none;
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
 
 details { margin-bottom: 1rem; }
 
@@ -82,23 +75,22 @@ details > summary {
 	-webkit-user-select: none;
 }
 
-input[type="file"] {
-	display: none;
-}
+input[type="file"] { display: none; }
 
 @media (prefers-color-scheme: dark) {
+
 	:root {
 		--text: hsl(180, 97%, 97%);
 		--background: hsl(210, 20%, 3%);
 	}
+	
 	.fake-btn {
 		background-color: hsl(210, 10%, 15%);
 		border: 1px solid rgba(255,255,255,.16);
 	}
-	.fake-btn:hover {
-		background-color: hsl(220, 10%, 20%);
-	  }
-	label > span::before {
-		filter: invert(1);
-	}
+	
+	.fake-btn:hover { background-color: hsl(220, 10%, 20%); }
+	
+	label > span::before { filter: invert(1); }
+
   }
