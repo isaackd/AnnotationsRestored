@@ -9,9 +9,8 @@ waitForElement(".ytp-right-controls").then(el => {
 	progressButton.classList.add("ytp-button", "ytp-settings-button");
 
 	progressButton.innerHTML = `
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="white" viewBox="0 0 36 36">
-    <path transform="translate(6.5, 6.5)" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
-    <path d="M0 0h24v24H0z" fill="none" />
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="white" viewBox="0 0 1366 1366" style="transform: scale(0.8) translateY(2px)">
+<path d="M1101.5,885.1H705.8l-251,177.4V885.1H264.5V303.6h836.9V885.1z"/>
 </svg>
 	`;
 
