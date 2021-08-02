@@ -67,3 +67,16 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
 		});
 	}
 });
+
+chrome.runtime.onMessage.addListener( (req) => {
+    if (req.scheme == "dark") {
+        chrome.browserAction.setIcon({
+            path: {
+                "128": "/icons/icondark128.png",
+                "48": "/icons/icondark48.png",
+                "32": "/icons/icondark32.png",
+                "16": "/icons/icondark16.png",
+            }
+        })
+    }
+})

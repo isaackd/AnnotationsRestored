@@ -9,10 +9,9 @@ waitForElement(".ytp-right-controls").then(el => {
 	progressButton.classList.add("ytp-button", "ytp-settings-button");
 
 	progressButton.innerHTML = `
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="white" viewBox="0 0 36 36">
-    <path transform="translate(6.5, 6.5)" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
-    <path d="M0 0h24v24H0z" fill="none" />
-</svg>
+	<svg width="100%" height="100%" viewBox="0 0 1 1" fill="white" version="1.1">
+	<path d="M0.786081 0.689854H0.523479L0.356887 0.807575V0.689854H0.230654V0.30394H0.786081V0.689854Z"/>
+	</svg>	
 	`;
 
 	progressButton.setAttribute("title", "Annotations aren't found");

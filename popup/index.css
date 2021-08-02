@@ -1,16 +1,96 @@
-textarea {
-	width: 98%;
-	height: 5rem;
+:root {
+	--text: #0f1111;
+	--background: hsl(210, 20%, 97%);
 }
-input {
-	margin-bottom: 0.5rem;
-}
-#buttons {
-	display: flex;
-	width: 100%;
 
-	justify-content: center;
+body {
+	width: 240px;
+	color: var(--text);
+	font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Helvetica', 'Inter', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+	background-color: var(--background);
 }
-#buttons > input:first-child {
-	margin-right: 1rem;
+
+main {
+	width: 95%;
+	margin: 0 auto;
+	transform: translateX(-2px);
 }
+
+details :nth-child(4) { margin: 1rem 0; }
+details :nth-child(1) { margin-bottom: 0.5rem; }
+
+textarea { width: 100%; background-color: var(--background); color: var(--text);}
+
+label > span::before {
+	display: inline-block;
+	content: '';
+	background-image: url('/popup/upload_file_black_24dp.svg');
+	background-size: 20px 20px;
+	height: 20px;
+	width: 20px;
+	transform: translate(-2px, 4px);
+	opacity: 0.5;
+}
+
+
+button, .fake-btn {
+  background-color: var(--background);
+  border: 1px solid rgba(0,0,0,0.16);
+  border-radius: .25rem;
+  color: var(--text);
+  font-size: .875rem;
+  font-weight: 600;
+  padding: .3rem .75rem;
+  text-align: center;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.fake-btn:hover { background-color: hsl(220, 30%, 90%); }
+
+.fake-btn:focus, button:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.fake-btn:focus-visible { box-shadow: none; }
+
+button {
+  background-color: hsl(210, 90%, 45%);
+  color: #fff;
+}
+
+button:hover { background-color: hsl(210, 80%, 55%); }
+
+
+details { margin-bottom: 1rem; }
+
+details > summary {
+	font-size: 1rem;
+	cursor: pointer;
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+input[type="file"] { display: none; }
+
+@media (prefers-color-scheme: dark) {
+
+	:root {
+		--text: hsl(180, 97%, 97%);
+		--background: hsl(210, 20%, 3%);
+	}
+	
+	.fake-btn {
+		background-color: hsl(210, 10%, 15%);
+		border: 1px solid rgba(255,255,255,.16);
+	}
+	
+	.fake-btn:hover { background-color: hsl(220, 10%, 20%); }
+	
+	label > span::before { filter: invert(1); }
+
+  }
