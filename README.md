@@ -8,7 +8,7 @@ On January 15 2019, YouTube decided to discontinue annotations. While the featur
 ## Installation
 **Google Chrome/Opera/Vivaldi/Chromium**
 
-Install from [Chrome Webstore](chrome.google.com/webstore)
+Install from [Chrome Webstore](https://chrome.google.com/webstore)
 1. https://chrome.google.com/webstore/detail/annotations-restored-for/daabpdmgkghdbfljmeahnplkcldbeefg
 
 Install from source
@@ -18,7 +18,7 @@ Install from source
 
 **Firefox**
 
-Install from [addons.mozilla.org](addons.mozilla.org)
+Install from [addons.mozilla.org](https://addons.mozilla.org)
 1. https://addons.mozilla.org/en-US/firefox/addon/annotations-restored/
 
 Install from source
