@@ -1,34 +1,34 @@
 ## Annotations Restored
 **Brings annotation support back to YouTube**
 
-![Demonstration of Annotations Restored](https://github.com/afrmtbl/AnnotationsRestored/blob/master/demo.gif)
+![Demonstration of Annotations Restored](https://github.com/isaackd/AnnotationsRestored/blob/master/demo.gif)
 
 On January 15 2019, YouTube decided to discontinue annotations. While the feature was frequently abused, it did have many legitimate use cases, such as games, corrections, and a form of commentary that could be toggled on and off. The removal left many older videos obsolete. **Annotations Restored** aims to fix this.
 
 ## Installation
 **Google Chrome/Opera/Vivaldi/Chromium**
 
-Install from [Chrome Webstore](chrome.google.com/webstore)
+Install from [Chrome Webstore](https://chrome.google.com/webstore)
 1. https://chrome.google.com/webstore/detail/annotations-restored-for/daabpdmgkghdbfljmeahnplkcldbeefg
 
 Install from source
-1. Download the [latest release of the extension](https://github.com/afrmtbl/AnnotationsRestored/releases) 
+1. Download the [latest release of the extension](https://github.com/isaackd/AnnotationsRestored/releases) 
 2. Go to [chrome://extensions](chrome://extensions), enable the "Developer Mode" option in the top right and reload the page.
 4. Drag **ext.zip** onto the window to install it. 
 
 **Firefox**
 
-Install from [addons.mozilla.org](addons.mozilla.org)
+Install from [addons.mozilla.org](https://addons.mozilla.org)
 1. https://addons.mozilla.org/en-US/firefox/addon/annotations-restored/
 
 Install from source
-1. Download the [latest release of the extension](https://github.com/afrmtbl/AnnotationsRestored/releases)
+1. Download the [latest release of the extension](https://github.com/isaackd/AnnotationsRestored/releases)
 2. Go to [about:debugging#addons](about:debugging#addons), click "Load Temporary Add-on"
 3. Select **ext.zip**.
 
 
 ## Restoring annotations on old videos
-If you were able to download your video's annotation data before it was removed, you can use the [conversion tool](https://afrmtbl.github.io/annotations-converter/) to convert it into a format the extension can understand. **The data put into the description must be in one of the following formats**: 
+If you were able to download your video's annotation data before it was removed, you can use the [conversion tool](https://isaackd.github.io/annotations-converter/) to convert it into a format the extension can understand. **The data put into the description must be in one of the following formats**: 
 * `[ar_start]CONVERTED_ANNOTATION_DATA[ar_end]` ([example](https://imgur.com/1ubx6B8))
 * `[ar_gist_start]username/gist_id[ar_gist_end]`
 * `[ar_pastebin_start]pastebin_id[ar_pastebin_end]`

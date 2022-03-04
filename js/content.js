@@ -206,7 +206,7 @@ function hideAnnotationsDuringAds(player) {
 	const targetNode = player;
 
 	// Options for the observer (which mutations to observe)
-	const config = { attributes: true, atrributeFilter: ["class"]};
+	const config = { attributes: true, attributeFilter: ["class"]};
 
 	// Callback function to execute when mutations are observed
 	const callback = function(mutationsList) {
