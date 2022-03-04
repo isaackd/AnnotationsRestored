@@ -16,41 +16,23 @@ function fetchVideoAnnotations(videoId) {
 	});
 }
 
-function descriptionHasAnnotations(tabId) {
-	const messageType = "check_description_for_annotations";
-
-	return new Promise((resolve, reject) => {
-		chrome.tabs.sendMessage(tabId, {type: messageType}, response => {
-			if (response && response.foundAnnotations) {
-				resolve();
-			}
-			else {
-				reject();
-			}
-		});
-	});
-}
-
 function handleVideoUpdate(tabId, videoId) {
 	chrome.tabs.sendMessage(tabId, {
 		type: "remove_renderer_annotations"
 	});
 
-	descriptionHasAnnotations(tabId).then(() => {
-		console.info(`Annotations found in description (${videoId})..`);
-	}).catch(() => {
-		console.info(`Annotations not found in description, fetching from server.. (${videoId})`);
-		fetchVideoAnnotations(videoId).then(text => {
-			console.info(`Received annotations for ${videoId} from server..`);
-			chrome.tabs.sendMessage(tabId, {
-				type: "annotations_received",
-				xml: text
-			});
-		}).catch(e => {
-			console.info(`Annotation data is unavailable for this video (${videoId})\n (${e})`);
-			chrome.tabs.sendMessage(tabId, {
-				type: "annotations_unavailable"
-			});
+
+	console.info(`Fetching from server.. (${videoId})`);
+	fetchVideoAnnotations(videoId).then(text => {
+		console.info(`Received annotations for ${videoId} from server..`);
+		chrome.tabs.sendMessage(tabId, {
+			type: "annotations_received",
+			xml: text
+		});
+	}).catch(e => {
+		console.info(`Annotation data is unavailable for this video (${videoId})\n (${e})`);
+		chrome.tabs.sendMessage(tabId, {
+			type: "annotations_unavailable"
 		});
 	});
 }

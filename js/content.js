@@ -86,33 +86,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			sendResponse(false);
 		}
 	}
-	else if (request.type === "check_description_for_annotations") {
-		console.info("Checking description for annotations...");
-		window.dispatchEvent(new CustomEvent("ar-status-change", {
-			detail: "Checking description for annotations..."
-		}));
-
-
-		getFirstValidDescriptionAnnotations().then(data => {
-			startNewAnnotationRenderer(data.annotations);
-			console.info(`Found ${data.type} annotation data in description`);
-			sendResponse({
-				foundAnnotations: true
-			});
-		}).catch(e => {
-			console.info(`Retrieving annotations for the current video...`);
-			window.dispatchEvent(new CustomEvent("ar-status-change", {
-				detail: "Retrieving annotations for the current video...\nThis may sometimes take a little while."
-			}));
-
-
-			sendResponse({
-				foundAnnotations: false
-			});
-		});
-		// return true so chrome knows we're responding asynchronously
-		return true;
-	} 
 	else if (request.type === "annotations_received") {
 		const annotationData = request.xml;
 		if (annotationData) {
