@@ -1,25 +1,25 @@
 {
-    "manifest_version": 3,
+    "manifest_version": 2,
     "name": "Annotations Restored for YouTube™",
     "short_name": "Annotations Restored",
     "version": "1.1",
 
     "description": "Brings annotation support back to YouTube™!",
 
-    "host_permissions": [
-        "https://invidious.snopyta.org/api/v1/annotations/*",
-        "https://gist.githubusercontent.com/*/raw/*",
+    "permissions": [
+		"https://invidious.snopyta.org/api/v1/annotations/*",
+		"https://gist.githubusercontent.com/*/raw/*",
         "https://pastebin.com/raw/*"
     ],
+
     "icons": {
     	"16": "icons/icon16.png",
     	"32": "icons/icon32.png",
     	"48": "icons/icon48.png",
-        "64": "icons/icon64.png",
         "128": "icons/icon128.png"
     },
 
-    "action": {
+    "browser_action": {
         "default_title": "Annotations Restored",
         "default_popup": "popup/index.html"
     },
@@ -39,6 +39,6 @@
         "css": ["js/annotationlib/dist/AnnotationRenderer.css"]
     }],
     "background": {
-        "service_worker": "js/background.js"
+        "scripts": ["js/background.js"]
     }
 }
