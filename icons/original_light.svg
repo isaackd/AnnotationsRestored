@@ -13,9 +13,9 @@
    xml:space="preserve"
    sodipodi:docname="original_light.svg"
    inkscape:version="1.1.2 (1:1.1+202202050852+0a00cf5339)"
-   inkscape:export-filename="/home/afrm/Desktop/AnnotationsRestored/icons/icondark16.png"
-   inkscape:export-xdpi="12"
-   inkscape:export-ydpi="12"
+   inkscape:export-filename="/home/afrm/Desktop/AnnotationsRestored/icons/icon128.png"
+   inkscape:export-xdpi="128"
+   inkscape:export-ydpi="128"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -51,23 +51,23 @@
    inkscape:pageopacity="0"
    inkscape:pagecheckerboard="false"
    showgrid="false"
-   inkscape:zoom="3.8050001"
-   inkscape:cx="61.892245"
-   inkscape:cy="72.01051"
+   inkscape:zoom="2.6905414"
+   inkscape:cx="13.937715"
+   inkscape:cy="28.990448"
    inkscape:window-width="2560"
    inkscape:window-height="1375"
    inkscape:window-x="0"
    inkscape:window-y="0"
    inkscape:window-maximized="1"
-   inkscape:current-layer="Laag_1" />
+   inkscape:current-layer="g838" />
 
 <g
-   style="overflow:hidden;opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:22.0888;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+   style="overflow:hidden;opacity:1;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:22.0888;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
    id="g838"
    transform="matrix(0.13753582,0,0,0.13753582,-15.63324,3.2164423)"><path
      d="M 858.2,96 H 299.8 C 261.4,96 230,127.4 230,165.8 V 618 c 0,38.4 31.4,70 69.8,70 H 776.2 L 928,794 V 165.8 C 928,127.4 896.6,96 858.2,96 Z"
      id="path828"
-     style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:22.0888;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" /></g><g
+     style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:22.0888;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" /></g><g
    id="g4"
    transform="matrix(0.32310457,0,0,0.32310457,-20.151784,-84.090949)"
    style="fill:#ffffff;fill-opacity:1">
