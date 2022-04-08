@@ -13,6 +13,10 @@
         "128": "icons/icon128.png"
     },
 
+    "permissions": [
+        "https://storage.googleapis.com/biggest_bucket/annotations/*"
+    ],
+
     "browser_action": {
         "default_title": "Annotations Restored",
         "default_popup": "popup/index.html"
