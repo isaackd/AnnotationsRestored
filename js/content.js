@@ -275,14 +275,22 @@ waitForElement(".ytp-panel-menu").then(el => {
 
 	el.prepend(annoSwitchPar);
 
-/* 	a visually-hidden input checkbox (annoSneakySwitch) is used to store the state of annotation visibility.
-	the same thing could be done with some craftier JS but checkboxes are very certain and difficult to screw up */
+	// a visually-hidden input checkbox (annoSneakySwitch) is used to store the state of annotation visibility.
+	// the same thing could be done with some craftier JS but checkboxes are very certain and difficult to screw up */
 
-	const annoSneakySwitch = document.querySelector('#annotation-sneaky-switch');
+	const annoSneakySwitch = document.querySelector("#annotation-sneaky-switch");
 	annoSneakySwitch.checked = true;
-	annoSwitchPar.addEventListener('click', () => {
-		annoSneakySwitch.click()
-		annoSneakySwitch.checked ? annoSwitchPar.setAttribute("aria-checked", "true", renderer.annotationsContainer.style.display = "block") : (annoSwitchPar.setAttribute("aria-checked", "false"), renderer.annotationsContainer.style.display = "none")
+	annoSwitchPar.addEventListener("click", () => {
+		annoSneakySwitch.click();
+
+		if (annoSneakySwitch.checked) {
+			annoSwitchPar.setAttribute("aria-checked", "true");
+			renderer.annotationsContainer.style.display = "block"
+		}
+		else {
+			annoSwitchPar.setAttribute("aria-checked", "false");
+			renderer.annotationsContainer.style.display = "none";
+		}
 	})
 }).catch(() => {
 	console.warn("Unable to find the video player settings menu, annotation switch not injected");
