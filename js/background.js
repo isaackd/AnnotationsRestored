@@ -1,10 +1,6 @@
 const annotationsEndpoint = "https://storage.googleapis.com/biggest_bucket/annotations";
 
-function fetchVideoAnnotations(videoId) {
-	if (videoId.length !== 11) { 
-		throw new Error("Video ID must be exactly 11 characters long"); 
-	}
-
+function getVideoPath(videoId) {
 	// Temporary fix for a GCS mistake
 	let annotationFileDirectory = videoId[0];
 
@@ -12,7 +8,15 @@ function fetchVideoAnnotations(videoId) {
 		annotationFileDirectory = "-/ar-"
 	}
 
-	const requestUrl = `${annotationsEndpoint}/${annotationFileDirectory}/${videoId.substring(0, 3)}/${videoId}.xml.gz`;
+	return `${annotationsEndpoint}/${annotationFileDirectory}/${videoId.substring(0, 3)}/${videoId}.xml.gz`;
+}
+
+function fetchVideoAnnotations(videoId) {
+	if (videoId.length !== 11) { 
+		throw new Error("Video ID must be exactly 11 characters long"); 
+	}
+
+	const requestUrl = getVideoPath(videoId);
 	console.info(`Retrieving annotations for '${videoId}' from '${requestUrl}'`);
 
 	return new Promise((resolve, reject) => {

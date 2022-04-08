@@ -8,6 +8,20 @@ const annotationDownloadButton = document.getElementById("download-button");
 
 let lastStateChangeTime = 0;
 let stateChangeTimeout = null;
+let currentVideoId;
+
+const annotationsEndpoint = "https://storage.googleapis.com/biggest_bucket/annotations";
+
+function getVideoPath(videoId) {
+	// Temporary fix for a GCS mistake
+	let annotationFileDirectory = videoId[0];
+
+	if (annotationFileDirectory === "-") {
+		annotationFileDirectory = "-/ar-"
+	}
+
+	return `${annotationsEndpoint}/${annotationFileDirectory}/${videoId.substring(0, 3)}/${videoId}.xml.gz`;
+}
 
 function changePopupState(state) {
 	clearTimeout(stateChangeTimeout);
@@ -68,6 +82,11 @@ function getPopupData() {
 	});
 }
 
+function setCurrentVideoId(videoId) {
+	currentVideoId = videoId;
+	videoIdElement.textContent = videoId;
+}
+
 
 function updatePopupData(updateRequest) {
 	const popupData = updateRequest.data;
@@ -76,14 +95,14 @@ function updatePopupData(updateRequest) {
 		changePopupState("no-video");
 	}
 	else if (updateRequest.status === "no_annotations") {
-		videoIdElement.textContent = popupData.videoId;
+		setCurrentVideoId(popupData.videoId);
 		changePopupState("no-annotations");
 	}
 	else if (updateRequest.status === "checking_for_annotations") {
 		changePopupState("checking-annotations");
 	}
 	else if (updateRequest.status === "annotations_loaded") {
-		videoIdElement.textContent = popupData.videoId;
+		setCurrentVideoId(popupData.videoId);
 		clearTable();
 
 		const annotationCount = popupData.annotations.length;
@@ -157,6 +176,39 @@ function addAnnotationTableRow(type, text, time, seconds) {
 
 	annotationTableBodyElement.append(rowElement);
 }
+
+function downloadAnnotationFile(videoId) {
+	let url = getVideoPath(videoId);
+	chrome.downloads.download({
+		filename: `annotations_${videoId}.xml`,
+		url: url,
+		saveAs: true 
+	});
+}
+
+function handleDownloadButtonClick() {
+	chrome.permissions.contains({ permissions: ["downloads"] }, result => {
+		if (result) {
+			// We have the download permission
+			downloadAnnotationFile(currentVideoId);
+		}
+		else {
+			// Request the download permission
+			chrome.permissions.request({
+				permissions: ["downloads"]
+			}, granted => {
+				if (granted) {
+					downloadAnnotationFile(url);
+				}
+				else {
+					window.open(url);
+				}
+			});
+		}
+	});
+}
+
+annotationDownloadButton.addEventListener("click", handleDownloadButtonClick);
 
 annotationTableBodyElement.addEventListener("click", e => {
 	const timeElement = e.target.closest(".annotation-time");

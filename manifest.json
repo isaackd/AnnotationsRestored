@@ -31,5 +31,9 @@
     }],
     "background": {
         "service_worker": "js/background.js"
-    }
+    },
+
+    "optional_permissions": [
+        "downloads"
+    ]
 }
