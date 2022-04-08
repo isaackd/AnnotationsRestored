@@ -1,118 +1,122 @@
-let currentVideoID;
+let currentVideoId;
+
+// statuses:
+//   - no_video
+//   - no_annotations
+//   - checking_for_annotations
+//   - annotations_loaded
+let currentStatus = "no_video";
 
 const annotationParser = new AnnotationParser();
 let renderer;
 let adPlaying = false;
 
-waitForElement(".ytp-right-controls").then(el => {
-	const progressButton = document.createElement("button");
-	progressButton.classList.add("ytp-button", "ytp-settings-button");
 
-	progressButton.innerHTML = `
-	<svg width="100%" height="100%" viewBox="0 0 1 1" fill="white" version="1.1">
-	<path d="M0.786081 0.689854H0.523479L0.356887 0.807575V0.689854H0.230654V0.30394H0.786081V0.689854Z"/>
-	</svg>	
-	`;
+function setCurrentStatus(status, data) {
+	currentStatus = status;
+	if (!data) {
+		data = {};
+	}
 
-	progressButton.setAttribute("title", "Annotations aren't found");
-	progressButton.setAttribute("aria-label", "Annotations aren't found");
-
-	el.prepend(progressButton);
-
-	progressButton.addEventListener("click", () => {
-		if (renderer && renderer.annotations.length) {
-			const times = renderer.annotations
-				.filter(an => an.data && an.data.hasOwnProperty("timeStart"))
-				.sort((a, b) => a.data.timeStart - b.data.timeStart)
-				.map(an => {
-					let type = an.data.type;
-					let style = an.data.style;
-
-					type = type ? type : "";
-					style = style ? ", " + style : "";
-
-					const sec = formatSeconds(an.data.timeStart);
-
-					return `${sec} ${type}${style}`;
-				}).join("\n");
-
-			alert(times);
-		}
-		else {
-			alert("There are no annotations loaded.");
-		}
+	chrome.runtime.sendMessage({
+		type: "content_status",
+		status: currentStatus,
+		data,
+	}, response => {
+		// this prevents errors if the popup isn't open
+		void response;
 	});
-
-	window.addEventListener("ar-status-change", e => {
-		progressButton.setAttribute("title", e.detail);
-		progressButton.setAttribute("aria-label", e.detail);
-	});
-}).catch(() => {
-	console.warn("Unable to find controls area");
-});
-
-function formatSeconds(sec) {
-    const minutes = Math.floor(sec / 60);
-    const seconds = Math.floor(sec % 60);
-
-    const minPadding = minutes < 10 ? "0" : "";
-    const secPadding = seconds < 10 ? "0" : "";
-
-    return `${minPadding}${minutes}:${secPadding}${seconds}`;
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-	if (request.message === "video_change") {
-
-		window.dispatchEvent(new CustomEvent("ar-status-change", {
-			detail: "Video changing..."
-		}));
-
+	if (request.type === "video_change") {
 		const currentUrl = new URL(document.URL);
 		const videoId = currentUrl.searchParams.get("v");
 
 		const isYoutubeWatchUrl = document.URL.startsWith("https://www.youtube.com/watch?");
 
-		if (videoId && videoId.length === 11 && videoId !== currentVideoID && isYoutubeWatchUrl) {
-			currentVideoID = videoId;
-			sendResponse(videoId);
-
-			if (renderer) {
-				renderer.removeAnnotationElements();
-				renderer.annotations = [];
-			}
-		}
-		else {
+		if (videoId === currentVideoId) {
 			sendResponse(false);
+			return;
 		}
+
+		if (!videoId || videoId.length !== 11 || !isYoutubeWatchUrl) {
+			currentVideoId = "";
+			setCurrentStatus("no_video");
+			sendResponse(false);
+			return;
+		}
+
+		currentVideoId = videoId;
+
+		setCurrentStatus("checking_for_annotations");
+		sendResponse(videoId);
+
+		if (renderer) {
+			renderer.removeAnnotationElements();
+			renderer.annotations = [];
+		}
+
 	}
 	else if (request.type === "annotations_received") {
 		const annotationData = request.xml;
 		if (annotationData) {
 			console.info("Received annotation data from server");
-			window.dispatchEvent(new CustomEvent("ar-status-change", {
-				detail: "Received annotation data from server. Annotations should now be loaded.\nClick to see annotation times."
-			}));
-
 
 			const annotationDom = annotationParser.xmlToDom(annotationData);
 			const annotationElements = annotationDom.getElementsByTagName("annotation");
 
 			const annotations = annotationParser.parseYoutubeAnnotationList(annotationElements);
 			startNewAnnotationRenderer(annotations);
+
+			setCurrentStatus("annotations_loaded", {
+				videoId: currentVideoId,
+				annotations: renderer.annotations.map(an => an.data)
+			});
 		}
+		else {
+			setCurrentStatus("no_annotations", {
+				videoId: currentVideoId
+			});
+		}
+
+		sendResponse(false);
 	} 
 	else if (request.type === "annotations_unavailable") {
 		console.info("Annotation data for this video is unavailable");
-		window.dispatchEvent(new CustomEvent("ar-status-change", {
-			detail: "Annotations are not available for this video."
-		}));
-	} 
+
+		setCurrentStatus("no_annotations", {
+			videoId: currentVideoId
+		});
+		sendResponse(false);
+	}
+	else if (request.type === "get_popup_data") {
+		if (renderer) {
+			sendResponse({
+				type: "content_status",
+				status: currentStatus,
+				data: {
+					videoId: currentVideoId,
+					annotations: renderer.annotations.map(an => an.data)
+				}
+			});
+		}
+		else {
+			let data = currentVideoId ? { videoId: currentVideoId } : {};
+			sendResponse({
+				type: "content_status",
+				status: currentStatus,
+				data
+			});
+		}
+	}
 	else if (request.type === "remove_renderer_annotations") {
 		if (renderer) {
 			renderer.stop();
 			renderer.removeAnnotationElements();
 		}
+
+		sendResponse(false);
 	}
 	// popup annotation loading
 	else if (request.type === "popup_load_youtube" && request.data) {
@@ -126,6 +130,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		else {
 			changeAnnotationData(annotations);
 		}
+
+		sendResponse(false);
 	} 
 	else if (request.type === "popup_load_converted" && request.data) {
 		console.info("Loading converted data");
@@ -135,6 +141,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		} 
 		else {
 			changeAnnotationData(annotations);
+		}
+
+		sendResponse(false);
+	}
+	else if (request.type === "seek_to") {
+		if (renderer) {
+			renderer.playerOptions.seekTo(request.seconds);
 		}
 	}
 });
@@ -262,7 +275,7 @@ waitForElement(".ytp-panel-menu").then(el => {
 	annoSwitchPar.className = "ytp-menuitem";
 	annoSwitchPar.innerHTML = `
 	<div class="ytp-menuitem-icon"></div>
-	<div class="ytp-menuitem-label">Annotations</div>
+	<div class="ytp-menuitem-label">Restore Annotations</div>
 	<div class="ytp-menuitem-content">
 		<div class="ytp-menuitem-toggle-checkbox">
 		<input type="checkbox" id="annotation-sneaky-switch" aria-hidden="true" style="position: absolute; left: -100vw;">

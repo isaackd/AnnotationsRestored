@@ -2,30 +2,79 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>AR Popup</title>
+
 	<link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
-	<main>
-		<details>
-			<summary>Add raw annotation data</summary>
-			<label for="youtube-file" class="fake-btn">
-				<span>Upload raw data</span>
-			</label>
-			<input id="youtube-file" type="file"/>
-			<textarea id="youtube-data" placeholder="Or paste raw annotation data" rows="3"></textarea>
-			<button id="load-youtube">Load</button>
-		</details>
-		<details open>
-			<summary>Add converted annotations</summary>
-			<label for="converted-file" class="fake-btn">
-				<span>Upload converted data</span>
-			</label>
-			<input id="converted-file" type="file"/>
-			<textarea id="converted-data" placeholder="Or paste converted annotation data" rows="3"></textarea>
-			<button id="load-converted">Load</button>
-		</details>
+
+	<main id="main" data-state="no-video">
+		<div id="state-container">
+			<h1 id="no-video-text" class="primary-text">No video playing</h1>
+			<h1 id="checking-annotations-text" class="primary-text">Checking for annotations...</h1>
+		</div>
+		<div id="header">
+			<h1 id="video-id">6Uwd5w1AwYU</h1>
+			<span id="load-annotation-file" class="secondary-text">Load Annotation File</span>
+		</div>
+		<div id="annotations-content">
+			<div id="annotations-found">
+				<h2 id="annotation-count"></h2>
+
+				<div id="annotations-table-container">
+					<table id="annotations-table">
+						<thead>
+							<tr>
+								<th>Type</th>
+								<th>Text</th>
+								<th>Time</th>
+							</tr>
+						</thead>
+						<tbody id="annotations-table-body"></tbody>
+					</table>
+				</div>
+
+				<button id="download-button">
+					<img src="download.svg">
+					<span>Download</span>
+				</button>
+			</div>
+			<div id="empty">
+				<img id="missing-annotations-icon" width="112px" src="missing_annotations.svg">
+				<h3 id="empty-header" class="primary-text">Hmm. It looks like we don't have any annotations for this video.</h3>
+				<p id="empty-subtext">Have the annotation file?<br>Send me an email at <span class="email">afrmtbl@gmail.com</span></p>
+			</div>
+		</div>
+		<div id="settings">
+			<h2 id="settings-title">Settings</h2>
+
+			<div id="settings-content">
+				<div class="setting-container" title="Test">
+					<input id="cache-annotations-setting" type="checkbox">
+					<label for="cache-annotations-setting">Cache Annotations</label>
+				</div>
+			</div>
+		</div>
+
+		<div id="footer">
+			<a href="https://github.com/isaackd/AnnotationsRestored" target="_blank">
+				<div id="github-link">
+					<img id="github-logo" src="github.svg">
+					<span>AnnotationsRestored</span>
+				</div>
+			</a>
+
+			<a href="https://ko-fi.com/isaackd" target="_blank">
+				<button id="coffee-button">
+					<img id="coffee-logo" src="coffee.png">
+					<span>Buy me a coffee</span>
+				</button>
+			</a>
+		</div>
 	</main>
 
-	<script defer type="text/javascript" src="index.js"></script>
+	<script type="text/javascript" src="index.js"></script>
+
 </body>
 </html>

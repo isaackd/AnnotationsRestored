@@ -1,96 +1,290 @@
-:root {
-	--text: #0f1111;
-	--background: hsl(210, 20%, 97%);
+@font-face {
+  	font-family: Inter;
+  	src: url("./Inter-Regular.ttf") format("truetype");  
+  	font-weight: normal;
+}
+
+@font-face {
+  	font-family: Inter;
+  	src: url("./Inter-Bold.ttf") format("truetype");  
+  	font-weight: bold;
+}
+
+* {
+	box-sizing: border-box;
 }
 
 body {
-	width: 240px;
-	color: var(--text);
-	font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Helvetica', 'Inter', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
-	background-color: var(--background);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	margin: 0;
+
+	font-family: Inter;
+
+	background-color: #E5E5E5;
+
+	font-size: 75%;
 }
 
 main {
-	width: 95%;
-	margin: 0 auto;
-	transform: translateX(-2px);
+	display: flex;
+
+	flex-flow: column nowrap;
+
+	width: 420px;
+
+	padding: 18px 32px;
+
+	background-color: #f8f8f8;
 }
 
-details :nth-child(4) { margin: 1rem 0; }
-details :nth-child(1) { margin-bottom: 0.5rem; }
-
-textarea { width: 100%; background-color: var(--background); color: var(--text);}
-
-label > span::before {
-	display: inline-block;
-	content: '';
-	background-image: url('/popup/upload_file_black_24dp.svg');
-	background-size: 20px 20px;
-	height: 20px;
-	width: 20px;
-	transform: translate(-2px, 4px);
-	opacity: 0.5;
+main[data-state="video"] #state-container,
+main[data-state="video"] #empty {
+	display: none;
 }
 
-
-button, .fake-btn {
-  background-color: var(--background);
-  border: 1px solid rgba(0,0,0,0.16);
-  border-radius: .25rem;
-  color: var(--text);
-  font-size: .875rem;
-  font-weight: 600;
-  padding: .3rem .75rem;
-  text-align: center;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
+main[data-state="no-annotations"] #state-container,
+main[data-state="no-annotations"] #annotations-found {
+	display: none;
 }
 
-.fake-btn:hover { background-color: hsl(220, 30%, 90%); }
-
-.fake-btn:focus, button:focus {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
+main[data-state="no-video"] #empty,
+main[data-state="no-video"] #annotations-content,
+main[data-state="no-video"] #header,
+main[data-state="no-video"] #checking-annotations-text {
+	display: none;
 }
 
-.fake-btn:focus-visible { box-shadow: none; }
-
-button {
-  background-color: hsl(210, 90%, 45%);
-  color: #fff;
+main[data-state="checking-annotations"] #empty,
+main[data-state="checking-annotations"] #annotations-content,
+main[data-state="checking-annotations"] #header,
+main[data-state="checking-annotations"] #no-video-text {
+	display: none;
 }
 
-button:hover { background-color: hsl(210, 80%, 55%); }
+#no-video {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
 
+#no-video-text {
+	font-size: 1.5rem;
+}
 
-details { margin-bottom: 1rem; }
+#header {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+	padding-bottom: 10px;
 
-details > summary {
-	font-size: 1rem;
+	text-align: center;
+}
+
+#video-id {
+	font-weight: bold;
+	margin: 0;
+}
+
+#load-annotation-file {
+	text-decoration: underline;
+	font-size: 12px;
+}
+
+#annotations-content {
+	flex-grow: 1;
+}
+
+#annotations-found h2 {
+	margin-bottom: 0.4rem;
+}
+
+#annotations-table {
+	width: 100%;
+	text-align: left;
+	border-collapse: collapse;
+}
+
+#annotations-table tr {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+#annotations-table-container {
+	max-height: 181px;
+	overflow-y: auto;
+}
+
+th, td {
+	padding: 0.5rem;
+}
+
+th, td {
+	font-size: 0.85rem;
+}
+
+.annotation-time span {
 	cursor: pointer;
-	user-select: none;
-	-webkit-user-select: none;
+
+	color: rgb(6, 95, 212);
+	text-decoration: underline;
 }
 
-input[type="file"] { display: none; }
+.email {
+	color: rgb(6, 95, 212);
+	user-select: all;
+}
 
-@media (prefers-color-scheme: dark) {
+.annotation-type {
+	text-transform: capitalize;
+}
 
-	:root {
-		--text: hsl(180, 97%, 97%);
-		--background: hsl(210, 20%, 3%);
-	}
-	
-	.fake-btn {
-		background-color: hsl(210, 10%, 15%);
-		border: 1px solid rgba(255,255,255,.16);
-	}
-	
-	.fake-btn:hover { background-color: hsl(220, 10%, 20%); }
-	
-	label > span::before { filter: invert(1); }
+.annotation-text.no-text {
+	font-style: italic;
+}
 
-  }
+.annotation-text span {
+    display: -webkit-box;
+    
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-word;
+}
+
+#download-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	grid-gap: 0.3rem;
+
+	font-weight: bold;
+	border: none;
+	border-radius: 6px;
+
+	margin-top: 1rem;
+
+	width: 100%;
+	padding: 0.5rem;
+	color: white;
+	background-color: #F53D3D;
+	cursor: pointer;
+}
+
+#download-button:hover {
+	background-color: #F23131;
+}
+
+#download-button img {
+	width: 20px;
+}
+
+#download-button span {
+	font-size: 0.9rem;
+}
+
+#empty {
+	text-align: center;
+}
+
+#empty-header {
+	font-weight: bold;
+	margin: 0;
+	padding: 0 2rem;
+	font-size: 1rem;
+}
+
+#empty-subtext {
+	margin-top: 0.8rem;
+	margin-bottom: 1rem;
+	padding: 0 2rem;
+	font-size: 0.9rem;
+}
+
+#missing-annotations-icon {
+	margin-top: 16px;
+}
+
+#settings {
+	margin-bottom: 1rem;
+}
+
+#settings label {
+	display: inline-block;
+	margin-left: 0.25rem;
+}
+
+#settings-title {
+	margin-bottom: 0.4rem;
+}
+
+#settings-content {
+	padding: 4px;
+}
+
+.setting-container {
+	display: flex;
+	/*justify-content: center;*/
+	align-items: center;
+}
+
+#footer {
+	display: flex;
+
+	justify-content: space-between;
+	align-items: center;
+
+	bottom: 0;
+}
+
+#footer span {
+	font-size: 0.8rem;
+}
+
+#github-link {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	grid-gap: 0.3rem;
+}
+
+#github-logo {
+	width: 20px;
+}
+
+#coffee-button {
+	display: flex;
+	align-items: center;
+	padding: 0.6rem;
+	border: none;
+
+	grid-gap: 0.3rem;
+
+	border-radius: 6px;
+	color: black !important;
+	text-decoration-color: black;
+
+	cursor: pointer;
+
+	background-color: #e3e3e3;
+}
+
+#coffee-button:hover {
+	background-color: #dedede;
+}
+
+#footer a {
+	color: black;
+}
+
+#coffee-logo {
+	width: 20px;
+}
+
+.primary-text {
+	opacity: 0.87;
+}
+
+.secondary-text {
+	opacity: 0.6;
+}
