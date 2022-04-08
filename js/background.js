@@ -1,17 +1,31 @@
-const annotationsEndpoint = "https://invidious.snopyta.org/api/v1/annotations/";
+const annotationsEndpoint = "https://storage.googleapis.com/biggest_bucket/annotations";
 
 function fetchVideoAnnotations(videoId) {
-	if (videoId.length !== 11) { throw new Error("Video ID must be exactly 11 characters long"); }
-	const requestUrl = annotationsEndpoint + videoId;
+	if (videoId.length !== 11) { 
+		throw new Error("Video ID must be exactly 11 characters long"); 
+	}
+
+	// Temporary fix for a GCS mistake
+	let annotationFileDirectory = videoId[0];
+
+	if (annotationFileDirectory === "-") {
+		annotationFileDirectory = "-/ar-"
+	}
+
+	const requestUrl = `${annotationsEndpoint}/${annotationFileDirectory}/${videoId.substring(0, 3)}/${videoId}.xml.gz`;
 	console.info(`Retrieving annotations for '${videoId}' from '${requestUrl}'`);
 
 	return new Promise((resolve, reject) => {
 		fetch(requestUrl)
-		.then(response => response.text())
-		.then(text => {
-			if (text) { resolve(text); }
- 			// the video was archived but had no annotations
-			else { reject("annotations_unavailable"); }
+		.then(response => {
+			if (response.ok) {
+				response.text()
+					.then(resolve)
+					.catch(reject);
+			}
+			else {
+				reject("annotations_unavailable"); 
+			}
 		}).catch(reject);
 	});
 }
@@ -20,7 +34,6 @@ function handleVideoUpdate(tabId, videoId) {
 	chrome.tabs.sendMessage(tabId, {
 		type: "remove_renderer_annotations"
 	});
-
 
 	console.info(`Fetching from server.. (${videoId})`);
 	fetchVideoAnnotations(videoId).then(text => {
@@ -40,12 +53,13 @@ function handleVideoUpdate(tabId, videoId) {
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
 	if (changeInfo.status === "complete") {	
 		chrome.tabs.sendMessage(tabId, {
-	        message: "video_change"
+			type: "video_change"
 		}, videoId => {
 			if (videoId) {
 				handleVideoUpdate(tabId, videoId);
 			}
-			void chrome.runtime.lastError;
 		});
 	}
+
+	return true;
 });
