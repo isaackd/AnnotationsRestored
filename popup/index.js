@@ -194,6 +194,19 @@ function downloadAnnotationFile(videoId) {
 	});
 }
 
+function sendLoadMessage(type, data) {
+	if (!type || !data) {
+		return;
+	}
+
+	chrome.tabs.query({currentWindow: true, active: true}, tabs => {
+		if (tabs[0]) {
+			const tab = tabs[0];
+			chrome.tabs.sendMessage(tab.id, { type, data });
+		}
+	});
+}
+
 annotationDownloadButton.addEventListener("click", () => {
 	chrome.permissions.request({
 		permissions: ["downloads"]
@@ -218,6 +231,21 @@ annotationTableBodyElement.addEventListener("click", e => {
 	}
 });
 
+loadAnnotationFileElement.addEventListener("click", () => {
+	const filePicker = document.createElement("input");
+	filePicker.setAttribute("type", "file");
+	filePicker.setAttribute("accept", ".xml");
+
+	filePicker.addEventListener("change", () => {
+		const reader = new FileReader();
+		reader.addEventListener("load", () => {
+			sendLoadMessage("popup_load_youtube", reader.result);
+		});
+		reader.readAsText(filePicker.files[0]);
+	});
+
+	filePicker.click();
+});
 
 manageCacheElement.addEventListener("click", () => {
 	const createData = {

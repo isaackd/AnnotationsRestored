@@ -84,7 +84,7 @@ main[data-state="checking-annotations"] #no-video-text {
 	margin: 0;
 }
 
-#load-annotation-file {
+#load-annotation-file,
 #manage-cache {
 	text-decoration: underline;
 	font-size: 12px;
@@ -168,7 +168,7 @@ th, td {
 	border: none;
 	border-radius: 6px;
 
-	margin-top: 1rem;
+	margin: 1rem 0;
 
 	width: 100%;
 	padding: 0.5rem;
@@ -191,6 +191,7 @@ th, td {
 
 #empty {
 	text-align: center;
+	margin-bottom: 2rem;
 }
 
 #empty-header {
@@ -211,7 +212,7 @@ th, td {
 	margin-top: 16px;
 }
 
-#settings {
+/*#settings {
 	margin-bottom: 1rem;
 }
 
@@ -230,9 +231,8 @@ th, td {
 
 .setting-container {
 	display: flex;
-	/*justify-content: center;*/
 	align-items: center;
-}
+}*/
 
 #footer {
 	display: flex;
