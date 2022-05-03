@@ -1,3 +1,8 @@
+// "browser" namespace in Firefox, "chrome" namespace in Chrome
+if (typeof globalThis.browser === "undefined") {
+	globalThis.browser = chrome;
+}
+
 const annotationsEndpoint = "https://storage.googleapis.com/biggest_bucket/annotations";
 
 function getVideoPath(videoId) {

@@ -1,3 +1,8 @@
+// "browser" namespace in Firefox, "chrome" namespace in Chrome
+if (typeof globalThis.browser === "undefined") {
+	globalThis.browser = chrome;
+}
+
 const mainElement = document.getElementById("main");
 
 const videoIdElement = document.getElementById("video-id");
