@@ -1,15 +1,18 @@
 ## Annotations Restored
-**Brings annotation support back to YouTube**
 
 ![Demonstration of Annotations Restored](https://github.com/isaackd/AnnotationsRestored/blob/master/demo.gif)
 
-On January 15 2019, YouTube decided to discontinue annotations. While the feature was frequently abused, it did have many legitimate use cases, such as games, corrections, and a form of commentary that could be toggled on and off. The removal left many older videos obsolete. **Annotations Restored** aims to fix this.
+On January 15 2019, YouTube decided to discontinue annotations. While the feature was frequently abused, it did have many legitimate use cases, such as games, corrections, and a form of commentary that could be toggled on and off. The removal left many older videos obsolete.
+
+Annotations Restored fixes this by searching for any archived annotation files and displaying them if found.
 
 ## Installation
+
 **Google Chrome/Opera/Vivaldi/Chromium**
 
-Install from [Chrome Webstore](https://chrome.google.com/webstore)
-1. https://chrome.google.com/webstore/detail/annotations-restored-for/daabpdmgkghdbfljmeahnplkcldbeefg
+<a href="https://chrome.google.com/webstore/detail/annotations-restored-for/daabpdmgkghdbfljmeahnplkcldbeefg"><img src="https://user-images.githubusercontent.com/585534/107280622-91a8ea80-6a26-11eb-8d07-77c548b28665.png" alt="Get Annotations Restored for Chromium"></a>
+
+Install from [Chrome Webstore](https://chrome.google.com/webstore/detail/annotations-restored-for/daabpdmgkghdbfljmeahnplkcldbeefg)
 
 Install from source
 1. Download the [latest release of the extension](https://github.com/isaackd/AnnotationsRestored/releases) 
@@ -18,8 +21,9 @@ Install from source
 
 **Firefox**
 
-Install from [addons.mozilla.org](https://addons.mozilla.org)
-1. https://addons.mozilla.org/en-US/firefox/addon/annotations-restored/
+<a href="https://addons.mozilla.org/firefox/addon/annotations-restored/"><img src="https://user-images.githubusercontent.com/585534/107280546-7b9b2a00-6a26-11eb-8f9f-f95932f4bfec.png" alt="Get Annotations Restored for Firefox"></a>
+
+Install from [Firefox Add-ons](https://addons.mozilla.org)
 
 Install from source
 1. Download the [latest release of the extension](https://github.com/isaackd/AnnotationsRestored/releases)
