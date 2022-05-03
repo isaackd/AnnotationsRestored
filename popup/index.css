@@ -85,8 +85,14 @@ main[data-state="checking-annotations"] #no-video-text {
 }
 
 #load-annotation-file {
+#manage-cache {
 	text-decoration: underline;
 	font-size: 12px;
+	cursor: pointer;
+}
+
+#manage-cache {
+	margin-left: 0.5rem;
 }
 
 #annotations-content {

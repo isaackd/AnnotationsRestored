@@ -6,6 +6,9 @@ const annotationTableBodyElement = document.getElementById("annotations-table-bo
 const annotationCountElement = document.getElementById("annotation-count");
 const annotationDownloadButton = document.getElementById("download-button");
 
+const loadAnnotationFileElement = document.getElementById("load-annotation-file");
+const manageCacheElement = document.getElementById("manage-cache");
+
 let lastStateChangeTime = 0;
 let stateChangeTimeout = null;
 let currentVideoId;
@@ -218,6 +221,15 @@ annotationTableBodyElement.addEventListener("click", e => {
 			chrome.tabs.sendMessage(tab.id, { type: "seek_to", seconds });
 		});
 	}
+});
+
+
+manageCacheElement.addEventListener("click", () => {
+	const createData = {
+		url: "/pages/cache_manager.html"
+	};
+
+	browser.tabs.create(createData);
 });
 
 chrome.runtime.onMessage.addListener(request => {
