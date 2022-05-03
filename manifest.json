@@ -14,6 +14,10 @@
         "128": "icons/icon128.png"
     },
 
+    "optional_permissions": [
+        "downloads"
+    ],
+
     "action": {
         "default_title": "Annotations Restored",
         "default_popup": "popup/index.html"
@@ -31,9 +35,5 @@
     }],
     "background": {
         "service_worker": "js/background.js"
-    },
-
-    "optional_permissions": [
-        "downloads"
-    ]
+    }
 }

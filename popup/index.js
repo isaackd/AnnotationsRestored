@@ -189,29 +189,19 @@ function downloadAnnotationFile(videoId) {
 	});
 }
 
-function handleDownloadButtonClick() {
-	chrome.permissions.contains({ permissions: ["downloads"] }, result => {
-		if (result) {
-			// We have the download permission
+annotationDownloadButton.addEventListener("click", () => {
+	chrome.permissions.request({
+		permissions: ["downloads"]
+	}, granted => {
+		if (granted) {
 			downloadAnnotationFile(currentVideoId);
 		}
 		else {
-			// Request the download permission
-			chrome.permissions.request({
-				permissions: ["downloads"]
-			}, granted => {
-				if (granted) {
-					downloadAnnotationFile(url);
-				}
-				else {
-					window.open(url);
-				}
-			});
+			let url = getVideoPath(currentVideoId);
+			chrome.tabs.create({ url });
 		}
 	});
-}
-
-annotationDownloadButton.addEventListener("click", handleDownloadButtonClick);
+});
 
 annotationTableBodyElement.addEventListener("click", e => {
 	const timeElement = e.target.closest(".annotation-time");
