@@ -14,7 +14,9 @@
     },
 
     "permissions": [
-        "https://storage.googleapis.com/biggest_bucket/annotations/*"
+        "https://storage.googleapis.com/biggest_bucket/annotations/*",
+        "storage"
+    ],
     "optional_permissions": [
         "downloads"
     ],

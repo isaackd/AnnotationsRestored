@@ -39,29 +39,60 @@ function fetchVideoAnnotations(videoId) {
 	});
 }
 
-function handleVideoUpdate(tabId, videoId) {
-	chrome.tabs.sendMessage(tabId, {
-		type: "remove_renderer_annotations"
-	});
 
-	console.info(`Fetching from server.. (${videoId})`);
-	fetchVideoAnnotations(videoId).then(text => {
-		console.info(`Received annotations for ${videoId} from server..`);
-		chrome.tabs.sendMessage(tabId, {
-			type: "annotations_received",
-			xml: text
-		});
-	}).catch(e => {
-		console.info(`Annotation data is unavailable for this video (${videoId})\n (${e})`);
-		chrome.tabs.sendMessage(tabId, {
-			type: "annotations_unavailable"
-		});
+async function getAnnotationsFromCache(videoId) {
+	return new Promise(async (resolve, reject) => {
+		const result = await browser.storage.local.get(videoId);
+
+		if (result[videoId]) {
+			resolve(result[videoId]);
+		}
+		else {
+			reject("video not in cache");
+		}
 	});
 }
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+async function handleVideoUpdate(tabId, videoId) {
+	browser.tabs.sendMessage(tabId, {
+		type: "remove_renderer_annotations"
+	});
+
+	const cachedAnnotations = await getAnnotationsFromCache(videoId)
+		.catch(e => void e);
+
+	if (cachedAnnotations) {
+		console.info(`Received annotations for ${videoId} from cache..`);
+
+		browser.tabs.sendMessage(tabId, {
+			type: "annotations_received",
+			xml: cachedAnnotations
+		});
+	}
+	else {
+		console.info(`Fetching from server.. (${videoId})`);
+
+		fetchVideoAnnotations(videoId).then(async (xml) => {
+			console.info(`Received annotations for ${videoId} from server..`);
+
+			await browser.storage.local.set({ [videoId]: xml });
+
+			browser.tabs.sendMessage(tabId, {
+				type: "annotations_received",
+				xml
+			});
+		}).catch(e => {
+			console.info(`Annotation data is unavailable for this video (${videoId})\n (${e})`);
+			browser.tabs.sendMessage(tabId, {
+				type: "annotations_unavailable"
+			});
+		});
+	}
+}
+
+browser.tabs.onUpdated.addListener((tabId, changeInfo) => {
 	if (changeInfo.status === "complete") {	
-		chrome.tabs.sendMessage(tabId, {
+		browser.tabs.sendMessage(tabId, {
 			type: "video_change"
 		}, videoId => {
 			if (videoId) {
