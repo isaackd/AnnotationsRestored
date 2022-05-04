@@ -23,7 +23,7 @@ Install from source
 
 <a href="https://addons.mozilla.org/firefox/addon/annotations-restored/"><img src="https://user-images.githubusercontent.com/585534/107280546-7b9b2a00-6a26-11eb-8f9f-f95932f4bfec.png" alt="Get Annotations Restored for Firefox"></a>
 
-Install from [Firefox Add-ons](https://addons.mozilla.org)
+Install from [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/annotations-restored/)
 
 Install from source
 1. Download the [latest release of the extension](https://github.com/isaackd/AnnotationsRestored/releases)
