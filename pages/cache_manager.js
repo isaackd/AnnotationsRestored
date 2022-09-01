@@ -6,17 +6,25 @@ if (typeof globalThis.browser === "undefined") {
 const totalSizeElement = document.getElementById("total-size");
 const videoListElement = document.getElementById("video-list");
 
+const titleElement = document.querySelector("title");
+const headerElement = document.getElementById("header");
+
+titleElement.textContent = browser.i18n.getMessage("manageCacheHeader");
+headerElement.textContent = browser.i18n.getMessage("manageCacheHeader");
+
 function updateTotalSize() {
 	// browser.storage.local.getBytesInUse() isn't supported in Firefox...
 	// https://bugzilla.mozilla.org/show_bug.cgi?id=1385832
 	if (browser.storage.local.getBytesInUse) {
 		browser.storage.local.getBytesInUse().then(bytes => {
-			totalSizeElement.textContent = `Total Size: ${Math.floor(bytes / 1000)} KB`;
+			const sizeText = browser.i18n.getMessage("manageCacheTotalSizeText");
+			totalSizeElement.textContent = `${sizeText} ${Math.floor(bytes / 1000)} KB`;
 		});
 	}
 	else {
 		browser.storage.local.get(result => {
-			totalSizeElement.textContent = `Total Size: ${Math.floor(JSON.stringify(result).length / 1000)} KB`;
+			const sizeText = browser.i18n.getMessage("manageCacheTotalSizeText");
+			totalSizeElement.textContent = `${sizeText}: ${Math.floor(JSON.stringify(result).length / 1000)} KB`;
 		});
 	}
 }
@@ -39,7 +47,7 @@ function updateVideosList() {
 			videoIdElement.textContent = item;
 
 			const openButtonElement = document.createElement("button");
-			openButtonElement.textContent = "Open";
+			openButtonElement.textContent = browser.i18n.getMessage("manageCacheOpenButtonText");
 			openButtonElement.classList.add("open-button");
 
 			openButtonElement.addEventListener("click", () => {
@@ -53,7 +61,9 @@ function updateVideosList() {
 			const deleteButtonElement = document.createElement("button");
 
 			const annotationsSize = new Blob([result[item]]).size;
-			deleteButtonElement.textContent = `Delete (${Math.floor(annotationsSize / 1000)} KB)`;
+			const annotationSizeKb = Math.floor(annotationsSize / 1000);
+			const deleteText = `${browser.i18n.getMessage("manageCacheDeleteButtonText")} (${annotationSizeKb} KB)`;
+			deleteButtonElement.textContent = deleteText;
 
 			deleteButtonElement.addEventListener("click", () => {
 				chrome.storage.local.remove(item);

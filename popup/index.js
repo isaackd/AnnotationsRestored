@@ -3,6 +3,45 @@ if (typeof globalThis.browser === "undefined") {
 	globalThis.browser = chrome;
 }
 
+const noVideoTextElement = document.getElementById("no-video-text");
+noVideoTextElement.textContent = browser.i18n.getMessage("statusTextNoVideo");
+
+const checkingForTextElement = document.getElementById("checking-annotations-text");
+checkingForTextElement.textContent = browser.i18n.getMessage("statusTextCheckingForVideo");
+
+const typeElement = document.getElementById("type-text");
+typeElement.textContent = browser.i18n.getMessage("annotationTableType");
+
+const textElement = document.getElementById("text-text");
+textElement.textContent = browser.i18n.getMessage("annotationTableText");
+
+const timeElement = document.getElementById("time-text");
+timeElement.textContent = browser.i18n.getMessage("annotationTableTime");
+
+const downloadTextElement = document.getElementById("download-text");
+downloadTextElement.textContent = browser.i18n.getMessage("downloadButtonText");
+
+const emptyHeaderElement = document.getElementById("empty-header");
+emptyHeaderElement.textContent = browser.i18n.getMessage("missingAnnotationsHeader");
+
+const emptySubtextElement = document.getElementById("empty-subtext");
+const newlineElement = document.createElement("br");
+
+const subtextOne = browser.i18n.getMessage("missingAnnotationsText1");
+const subtextTwo = browser.i18n.getMessage("missingAnnotationsText2");
+
+const emailTextElement = document.createElement("span");
+emailTextElement.classList.add("email");
+emailTextElement.textContent = " afrmtbl@gmail.com";
+
+emptySubtextElement.append(subtextOne, newlineElement, subtextTwo, emailTextElement);
+
+const extensionNameElement = document.getElementById("extension-name");
+extensionNameElement.textContent = browser.i18n.getMessage("shortName");
+
+const coffeeTextElement = document.getElementById("coffee-text");
+coffeeTextElement.textContent = browser.i18n.getMessage("donateButtonText");
+
 const mainElement = document.getElementById("main");
 
 const videoIdElement = document.getElementById("video-id");
@@ -12,7 +51,10 @@ const annotationCountElement = document.getElementById("annotation-count");
 const annotationDownloadButton = document.getElementById("download-button");
 
 const loadAnnotationFileElement = document.getElementById("load-annotation-file");
+loadAnnotationFileElement.textContent = browser.i18n.getMessage("loadAnnotationText");
+
 const manageCacheElement = document.getElementById("manage-cache");
+manageCacheElement.textContent = browser.i18n.getMessage("manageCacheText");
 
 let lastStateChangeTime = 0;
 let stateChangeTimeout = null;
@@ -114,8 +156,12 @@ function updatePopupData(updateRequest) {
 		clearTable();
 
 		const annotationCount = popupData.annotations.length;
-		const plural = annotationCount === 1 ? "Annotation" : "Annotations";
-		annotationCountElement.textContent = `${annotationCount} ${plural}`;
+		const localizedCount = annotationCount.toLocaleString();
+		const plural = annotationCount === 1 ? "annotationCountSingular" : "annotationCountPlural";
+
+		const localizedText = browser.i18n.getMessage(plural);
+
+		annotationCountElement.textContent = `${localizedCount} ${localizedText}`;
 
 		const annotations = extractAnnotationMeta(popupData.annotations);
 
@@ -165,7 +211,7 @@ function addAnnotationTableRow(type, text, time, seconds) {
 		textSpan.setAttribute("title", text);
 	}
 	else {
-		textSpan.textContent = "No text";
+		textSpan.textContent = browser.i18n.getMessage("annotationNoText");
 		textColumn.classList.add("no-text", "secondary-text");
 	}
 

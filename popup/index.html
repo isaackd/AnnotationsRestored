@@ -8,16 +8,15 @@
 	<link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
-
 	<main id="main" data-state="no-video">
 		<div id="state-container">
-			<h1 id="no-video-text" class="primary-text">No video playing</h1>
-			<h1 id="checking-annotations-text" class="primary-text">Checking for annotations...</h1>
+			<h1 id="no-video-text" class="primary-text"></h1>
+			<h1 id="checking-annotations-text" class="primary-text"></h1>
 		</div>
 		<div id="header">
 			<h1 id="video-id"></h1>
-			<span id="load-annotation-file" class="secondary-text">Load Annotation File</span>
-			<span id="manage-cache" class="secondary-text">Manage Cache</span>
+			<span id="load-annotation-file" class="secondary-text"></span>
+			<span id="manage-cache" class="secondary-text"></span>
 		</div>
 		<div id="annotations-content">
 			<div id="annotations-found">
@@ -27,9 +26,9 @@
 					<table id="annotations-table">
 						<thead>
 							<tr>
-								<th>Type</th>
-								<th>Text</th>
-								<th>Time</th>
+								<th id="type-text"></th>
+								<th id="text-text"></th>
+								<th id="time-text"></th>
 							</tr>
 						</thead>
 						<tbody id="annotations-table-body"></tbody>
@@ -38,13 +37,13 @@
 
 				<button id="download-button">
 					<img src="download.svg">
-					<span>Download</span>
+					<span id="download-text"></span>
 				</button>
 			</div>
 			<div id="empty">
 				<img id="missing-annotations-icon" width="112px" src="missing_annotations.svg">
-				<h3 id="empty-header" class="primary-text">Hmm. It looks like we don't have any annotations for this video.</h3>
-				<p id="empty-subtext">Have the annotation file?<br>Send me an email at <span class="email">afrmtbl@gmail.com</span></p>
+				<h3 id="empty-header" class="primary-text"></h3>
+				<p id="empty-subtext"></p>
 			</div>
 		</div>
 <!-- 		<div id="settings">
@@ -62,14 +61,14 @@
 			<a href="https://github.com/isaackd/AnnotationsRestored" target="_blank">
 				<div id="github-link">
 					<img id="github-logo" src="github.svg">
-					<span>AnnotationsRestored</span>
+					<span id="extension-name"></span>
 				</div>
 			</a>
 
 			<a href="https://ko-fi.com/isaackd" target="_blank">
 				<button id="coffee-button">
 					<img id="coffee-logo" src="coffee.png">
-					<span>Buy me a coffee!</span>
+					<span id="coffee-text"></span>
 				</button>
 			</a>
 		</div>
