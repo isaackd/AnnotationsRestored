@@ -1,0 +1,11 @@
+[
+    {
+        "origin": [
+            "chrome-extension://ddollceobbebemnbdagcmgcilgkadcmo",
+            "chrome-extension://daabpdmgkghdbfljmeahnplkcldbeefg"
+        ],
+        "method": ["GET"],
+        "responseHeader": ["Content-Type"],
+        "maxAgeSeconds": 3600
+    }
+]
