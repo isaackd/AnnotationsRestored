@@ -1,0 +1,77 @@
+{
+	"name": {
+		"message": "Аннотации восстановлены для YouTube™"
+	},
+	"shortName": {
+		"message": "Аннотации восстановлены"
+	},
+	"description": {
+		"message": "Верните поддержку аннотаций на YouTube™!"
+	},
+
+	"statusTextNoVideo": {
+		"message": "Видео не воспроизводится"
+	},
+	"statusTextCheckingForVideo": {
+		"message": "Проверка аннотаций..."
+	},
+
+	"loadAnnotationText": {
+		"message": "Загрузить файл аннотаций"
+	},
+	"manageCacheText": {
+		"message": "Управление кешем"
+	},
+
+	"annotationCountSingular": {
+		"message": "Аннотация"
+	},
+	"annotationCountPlural": {
+		"message": "Аннотации"
+	},
+
+	"annotationTableType": {
+		"message": "Тип"
+	},
+	"annotationTableText": {
+		"message": "Текст"
+	},
+	"annotationTableTime": {
+		"message": "Время"
+	},
+
+	"annotationNoText": {
+		"message": "Нет текста"
+	},
+
+	"downloadButtonText": {
+		"message": "Скачать"
+	},
+
+	"missingAnnotationsHeader": {
+		"message": "Хм. Похоже, у нас нет аннотаций для этого видео."
+	},
+	"missingAnnotationsText1": {
+		"message": "Есть файл аннотации?"
+	},
+	"missingAnnotationsText2": {
+		"message": "Отправьте мне письмо по адресу"
+	},
+
+	"donateButtonText": {
+		"message": "Купи мне кофе!"
+	},
+
+	"manageCacheHeader": {
+		"message": "Управление восстановленным кэшем аннотаций"
+	},
+	"manageCacheTotalSizeText": {
+		"message": "Общий размер:"
+	},
+	"manageCacheOpenButtonText": {
+		"message": "Открытым"
+	},
+	"manageCacheDeleteButtonText": {
+		"message": "Удалить"
+	}
+}

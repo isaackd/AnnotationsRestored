@@ -1,0 +1,77 @@
+{
+	"name": {
+		"message": "為 YouTube™ 恢復註釋"
+	},
+	"shortName": {
+		"message": "註釋已恢復"
+	},
+	"description": {
+		"message": "將註釋支持帶回 YouTube™！"
+	},
+
+	"statusTextNoVideo": {
+		"message": "沒有視頻播放"
+	},
+	"statusTextCheckingForVideo": {
+		"message": "正在檢查註釋..."
+	},
+
+	"loadAnnotationText": {
+		"message": "加載註釋文件"
+	},
+	"manageCacheText": {
+		"message": "管理緩存"
+	},
+
+	"annotationCountSingular": {
+		"message": "註解"
+	},
+	"annotationCountPlural": {
+		"message": "註釋"
+	},
+
+	"annotationTableType": {
+		"message": "類型"
+	},
+	"annotationTableText": {
+		"message": "文本"
+	},
+	"annotationTableTime": {
+		"message": "時間"
+	},
+
+	"annotationNoText": {
+		"message": "沒有文字"
+	},
+
+	"downloadButtonText": {
+		"message": "下載"
+	},
+
+	"missingAnnotationsHeader": {
+		"message": "唔。 我們似乎沒有為此視頻添加任何註釋。"
+	},
+	"missingAnnotationsText1": {
+		"message": "有註釋文件嗎？"
+	},
+	"missingAnnotationsText2": {
+		"message": "給我發電子郵件"
+	},
+
+	"donateButtonText": {
+		"message": "給我買杯咖啡！"
+	},
+
+	"manageCacheHeader": {
+		"message": "管理註釋恢復緩存"
+	},
+	"manageCacheTotalSizeText": {
+		"message": "總尺寸："
+	},
+	"manageCacheOpenButtonText": {
+		"message": "打開"
+	},
+	"manageCacheDeleteButtonText": {
+		"message": "刪除"
+	}
+}

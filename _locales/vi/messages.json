@@ -1,0 +1,77 @@
+{
+	"name": {
+		"message": "Chú thích được khôi phục cho YouTube ™"
+	},
+	"shortName": {
+		"message": "Chú thích được khôi phục"
+	},
+	"description": {
+		"message": "Đưa hỗ trợ chú thích trở lại YouTube ™!"
+	},
+
+	"statusTextNoVideo": {
+		"message": "Không phát video"
+	},
+	"statusTextCheckingForVideo": {
+		"message": "Đang kiểm tra các chú thích ..."
+	},
+
+	"loadAnnotationText": {
+		"message": "Tải tệp chú thích"
+	},
+	"manageCacheText": {
+		"message": "Quản lý bộ nhớ đệm"
+	},
+
+	"annotationCountSingular": {
+		"message": "Chú thích"
+	},
+	"annotationCountPlural": {
+		"message": "Chú thích"
+	},
+
+	"annotationTableType": {
+		"message": "Loại hình"
+	},
+	"annotationTableText": {
+		"message": "Chữ"
+	},
+	"annotationTableTime": {
+		"message": "Thời gian"
+	},
+
+	"annotationNoText": {
+		"message": "Không có văn bản"
+	},
+
+	"downloadButtonText": {
+		"message": "Tải xuống"
+	},
+
+	"missingAnnotationsHeader": {
+		"message": "Hừ! Có vẻ như chúng tôi không có bất kỳ chú thích nào cho video này."
+	},
+	"missingAnnotationsText1": {
+		"message": "Có tệp chú thích?"
+	},
+	"missingAnnotationsText2": {
+		"message": "Gửi cho tôi một email tại"
+	},
+
+	"donateButtonText": {
+		"message": "Mua cho tôi một ly cà phê!"
+	},
+
+	"manageCacheHeader": {
+		"message": "Quản lý bộ nhớ đệm đã khôi phục chú thích"
+	},
+	"manageCacheTotalSizeText": {
+		"message": "Tổng kích thước:"
+	},
+	"manageCacheOpenButtonText": {
+		"message": "Mở"
+	},
+	"manageCacheDeleteButtonText": {
+		"message": "Xóa bỏ"
+	}
+}

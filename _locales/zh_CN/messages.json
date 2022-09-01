@@ -1,0 +1,77 @@
+{
+	"name": {
+		"message": "为 YouTube™ 恢复注释"
+	},
+	"shortName": {
+		"message": "注释已恢复"
+	},
+	"description": {
+		"message": "将注释支持带回 YouTube™！"
+	},
+
+	"statusTextNoVideo": {
+		"message": "没有视频播放"
+	},
+	"statusTextCheckingForVideo": {
+		"message": "正在检查注释..."
+	},
+
+	"loadAnnotationText": {
+		"message": "加载注释文件"
+	},
+	"manageCacheText": {
+		"message": "管理缓存"
+	},
+
+	"annotationCountSingular": {
+		"message": "注解"
+	},
+	"annotationCountPlural": {
+		"message": "注释"
+	},
+
+	"annotationTableType": {
+		"message": "类型"
+	},
+	"annotationTableText": {
+		"message": "文本"
+	},
+	"annotationTableTime": {
+		"message": "时间"
+	},
+
+	"annotationNoText": {
+		"message": "没有文字"
+	},
+
+	"downloadButtonText": {
+		"message": "下载"
+	},
+
+	"missingAnnotationsHeader": {
+		"message": "唔。 我们似乎没有为此视频添加任何注释。"
+	},
+	"missingAnnotationsText1": {
+		"message": "有注释文件吗？"
+	},
+	"missingAnnotationsText2": {
+		"message": "给我发送电子邮件至"
+	},
+
+	"donateButtonText": {
+		"message": "给我买杯咖啡！"
+	},
+
+	"manageCacheHeader": {
+		"message": "管理注释恢复缓存"
+	},
+	"manageCacheTotalSizeText": {
+		"message": "总尺寸："
+	},
+	"manageCacheOpenButtonText": {
+		"message": "打开"
+	},
+	"manageCacheDeleteButtonText": {
+		"message": "删除"
+	}
+}

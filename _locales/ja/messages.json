@@ -1,0 +1,77 @@
+{
+	"name": {
+		"message": "YouTube™ 用に復元された注釈"
+	},
+	"shortName": {
+		"message": "注釈が復元されました"
+	},
+	"description": {
+		"message": "アノテーションのサポートを YouTube™ に戻しましょう!"
+	},
+
+	"statusTextNoVideo": {
+		"message": "動画再生なし"
+	},
+	"statusTextCheckingForVideo": {
+		"message": "注釈をチェックしています..."
+	},
+
+	"loadAnnotationText": {
+		"message": "注釈ファイルをロード"
+	},
+	"manageCacheText": {
+		"message": "キャッシュの管理"
+	},
+
+	"annotationCountSingular": {
+		"message": "注釈"
+	},
+	"annotationCountPlural": {
+		"message": "注釈"
+	},
+
+	"annotationTableType": {
+		"message": "タイプ"
+	},
+	"annotationTableText": {
+		"message": "文章"
+	},
+	"annotationTableTime": {
+		"message": "時間"
+	},
+
+	"annotationNoText": {
+		"message": "テキストなし"
+	},
+
+	"downloadButtonText": {
+		"message": "ダウンロード"
+	},
+
+	"missingAnnotationsHeader": {
+		"message": "うーん。 この動画にはアノテーションがないようです。"
+	},
+	"missingAnnotationsText1": {
+		"message": "注釈ファイルはありますか?"
+	},
+	"missingAnnotationsText2": {
+		"message": "にメールを送ってください"
+	},
+
+	"donateButtonText": {
+		"message": "私にコーヒーを買ってください！"
+	},
+
+	"manageCacheHeader": {
+		"message": "キャッシュを復元した注釈の管理"
+	},
+	"manageCacheTotalSizeText": {
+		"message": "全体の大きさ："
+	},
+	"manageCacheOpenButtonText": {
+		"message": "開ける"
+	},
+	"manageCacheDeleteButtonText": {
+		"message": "消去"
+	}
+}

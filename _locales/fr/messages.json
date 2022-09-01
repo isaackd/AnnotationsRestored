@@ -1,0 +1,77 @@
+{
+	"name": {
+		"message": "Annotations Restaurées pour YouTube™"
+	},
+	"shortName": {
+		"message": "Annotations Restaurées"
+	},
+	"description": {
+		"message": "Ramenez la prise en charge des annotations sur YouTube™!"
+	},
+
+	"statusTextNoVideo": {
+		"message": "Aucune vidéo en cours de lecture"
+	},
+	"statusTextCheckingForVideo": {
+		"message": "Vérification des annotations..."
+	},
+
+	"loadAnnotationText": {
+		"message": "Charger le fichier d'annotations"
+	},
+	"manageCacheText": {
+		"message": "Gérer le cache"
+	},
+
+	"annotationCountSingular": {
+		"message": "Annotation"
+	},
+	"annotationCountPlural": {
+		"message": "Annotations"
+	},
+
+	"annotationTableType": {
+		"message": "Type"
+	},
+	"annotationTableText": {
+		"message": "Texte"
+	},
+	"annotationTableTime": {
+		"message": "Temps"
+	},
+
+	"annotationNoText": {
+		"message": "Pas de texte"
+	},
+
+	"downloadButtonText": {
+		"message": "Télécharger"
+	},
+
+	"missingAnnotationsHeader": {
+		"message": "Hmm. Il semble que nous n'ayons aucune annotation pour cette vidéo."
+	},
+	"missingAnnotationsText1": {
+		"message": "Vous avez le fichier d'annotation?"
+	},
+	"missingAnnotationsText2": {
+		"message": "Envoyez-moi un email à"
+	},
+
+	"donateButtonText": {
+		"message": "Achetez-moi un café!"
+	},
+
+	"manageCacheHeader": {
+		"message": "Gérer le cache des Annotations Restaurées"
+	},
+	"manageCacheTotalSizeText": {
+		"message": "Taille totale:"
+	},
+	"manageCacheOpenButtonText": {
+		"message": "Ouvrir"
+	},
+	"manageCacheDeleteButtonText": {
+		"message": "Supprimer"
+	}
+}

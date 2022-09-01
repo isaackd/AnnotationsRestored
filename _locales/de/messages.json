@@ -1,0 +1,77 @@
+{
+	"name": {
+		"message": "Anmerkungen für YouTube™ wiederhergestellt"
+	},
+	"shortName": {
+		"message": "Anmerkungen wiederhergestellt"
+	},
+	"description": {
+		"message": "Bringen Sie die Anmerkungsunterstützung zurück zu YouTube™!"
+	},
+
+	"statusTextNoVideo": {
+		"message": "Kein Video abgespielt"
+	},
+	"statusTextCheckingForVideo": {
+		"message": "Auf Anmerkungen prüfen..."
+	},
+
+	"loadAnnotationText": {
+		"message": "Anmerkungsdatei laden"
+	},
+	"manageCacheText": {
+		"message": "Cache verwalten"
+	},
+
+	"annotationCountSingular": {
+		"message": "Anmerkung"
+	},
+	"annotationCountPlural": {
+		"message": "Anmerkungen"
+	},
+
+	"annotationTableType": {
+		"message": "Typ"
+	},
+	"annotationTableText": {
+		"message": "Text"
+	},
+	"annotationTableTime": {
+		"message": "Zeit"
+	},
+
+	"annotationNoText": {
+		"message": "Kein Text"
+	},
+
+	"downloadButtonText": {
+		"message": "Download"
+	},
+
+	"missingAnnotationsHeader": {
+		"message": "Hmm. Anscheinend haben wir keine Anmerkungen zu diesem Video."
+	},
+	"missingAnnotationsText1": {
+		"message": "Haben Sie die Anmerkungsdatei?"
+	},
+	"missingAnnotationsText2": {
+		"message": "Senden Sie mir eine E-Mail an"
+	},
+
+	"donateButtonText": {
+		"message": "Kaufen Sie mir einen Kaffee!"
+	},
+
+	"manageCacheHeader": {
+		"message": "Cache für wiederhergestellte Anmerkungen verwalten"
+	},
+	"manageCacheTotalSizeText": {
+		"message": "Gesamtgröße:"
+	},
+	"manageCacheOpenButtonText": {
+		"message": "Offen"
+	},
+	"manageCacheDeleteButtonText": {
+		"message": "Löschen"
+	}
+}

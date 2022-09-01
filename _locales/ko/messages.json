@@ -1,0 +1,77 @@
+{
+	"name": {
+		"message": "YouTube™용으로 복원된 주석"
+	},
+	"shortName": {
+		"message": "주석 복원됨"
+	},
+	"description": {
+		"message": "YouTube™에 특수효과 지원을 다시 가져오세요!"
+	},
+
+	"statusTextNoVideo": {
+		"message": "동영상이 재생되지 않음"
+	},
+	"statusTextCheckingForVideo": {
+		"message": "주석 확인 중..."
+	},
+
+	"loadAnnotationText": {
+		"message": "주석 파일 로드"
+	},
+	"manageCacheText": {
+		"message": "캐시 관리"
+	},
+
+	"annotationCountSingular": {
+		"message": "주석"
+	},
+	"annotationCountPlural": {
+		"message": "주석"
+	},
+
+	"annotationTableType": {
+		"message": "유형"
+	},
+	"annotationTableText": {
+		"message": "텍스트"
+	},
+	"annotationTableTime": {
+		"message": "시간"
+	},
+
+	"annotationNoText": {
+		"message": "텍스트 없음"
+	},
+
+	"downloadButtonText": {
+		"message": "다운로드"
+	},
+
+	"missingAnnotationsHeader": {
+		"message": "흠. 이 동영상에 대한 특수효과가 없는 것 같습니다."
+	},
+	"missingAnnotationsText1": {
+		"message": "주석 파일이 있습니까?"
+	},
+	"missingAnnotationsText2": {
+		"message": "나에게 이메일을 보내"
+	},
+
+	"donateButtonText": {
+		"message": "커피 사줘!"
+	},
+
+	"manageCacheHeader": {
+		"message": "주석 복원 캐시 관리"
+	},
+	"manageCacheTotalSizeText": {
+		"message": "총합 크기:"
+	},
+	"manageCacheOpenButtonText": {
+		"message": "열려 있는"
+	},
+	"manageCacheDeleteButtonText": {
+		"message": "삭제"
+	}
+}
