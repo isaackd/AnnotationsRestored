@@ -2,7 +2,8 @@
     {
         "origin": [
             "chrome-extension://ddollceobbebemnbdagcmgcilgkadcmo",
-            "chrome-extension://daabpdmgkghdbfljmeahnplkcldbeefg"
+            "chrome-extension://daabpdmgkghdbfljmeahnplkcldbeefg",
+            "chrome-extension://hdadelacifoidogimlijapliklanndmb"
         ],
         "method": ["GET"],
         "responseHeader": ["Content-Type"],
