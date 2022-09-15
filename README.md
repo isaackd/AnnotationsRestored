@@ -1,8 +1,10 @@
-![Demonstration of Annotations Restored](https://github.com/isaackd/AnnotationsRestored/blob/master/demo.gif)
+![Logo and title](https://github.com/isaackd/AnnotationsRestored/blob/master/promo/Marquee_short.png)
 
 On January 15 2019, YouTube decided to discontinue annotations. While the feature was frequently abused, it did have many legitimate use cases, such as games, corrections, and a form of commentary that could be toggled on and off. The removal left many older videos obsolete.
 
 Annotations Restored fixes this by searching for any archived annotation files and displaying them if found.
+
+![Demonstration of Annotations Restored](https://github.com/isaackd/AnnotationsRestored/blob/master/demo.gif)
 
 ## Installation
 
