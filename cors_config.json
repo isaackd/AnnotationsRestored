@@ -3,7 +3,8 @@
         "origin": [
             "chrome-extension://ddollceobbebemnbdagcmgcilgkadcmo",
             "chrome-extension://daabpdmgkghdbfljmeahnplkcldbeefg",
-            "chrome-extension://hdadelacifoidogimlijapliklanndmb"
+            "chrome-extension://hdadelacifoidogimlijapliklanndmb",
+            "chrome-extension://odldjlabdddambcjhpdahhfgbdifoapp"
         ],
         "method": ["GET"],
         "responseHeader": ["Content-Type"],
