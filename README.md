@@ -30,6 +30,10 @@ Install from source
 2. Go to [about:debugging#addons](about:debugging#addons), click "Load Temporary Add-on"
 3. Select **ext.zip**.
 
+### Microsoft Edge
+
+Install from [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/annotations-restored-for-/odldjlabdddambcjhpdahhfgbdifoapp)
+
 ## Contributing
 
 ### Development
