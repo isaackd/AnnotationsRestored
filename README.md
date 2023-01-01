@@ -34,6 +34,17 @@ Install from source
 
 Install from [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/annotations-restored-for-/odldjlabdddambcjhpdahhfgbdifoapp)
 
+## Interesting videos with annotations
+
+* [Mario Menu](https://www.youtube.com/watch?v=6Uwd5w1AwYU)
+* [Annotation Tetris](https://www.youtube.com/watch?v=eIIV6a2Pdh4)
+* [Ace Attorney Translations](https://www.youtube.com/watch?v=hzQuGq21Dlc&list=PLjRAU3j6cNaixtcLDixVlaz7Vcthm0rmh&index=1) (only the first video was saved unfortunately)
+* [SomeGuy Automatic Mario](https://www.youtube.com/watch?v=94tVUfUdCFs)
+* [TLOC3 \*SPECIAL EDITION\* Now with Creators' Annotations](https://www.youtube.com/watch?v=rf5ngNUN2yo)
+* [Pop-Up Coin-Op: Space Invaders](https://www.youtube.com/watch?v=VP2T3YlTDG8)
+
+Check out the [wiki for more](https://github.com/isaackd/AnnotationsRestored/wiki/List-of-videos-with-annotations).
+
 ## Contributing
 
 ### Development
