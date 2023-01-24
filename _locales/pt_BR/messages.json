@@ -10,7 +10,7 @@
 	},
 
 	"statusTextNoVideo": {
-		"message": "Nenhum vídeo tocando"
+		"message": "Nenhum vídeo reproduzindo"
 	},
 	"statusTextCheckingForVideo": {
 		"message": "Procurando anotações..."
