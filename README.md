@@ -55,7 +55,9 @@ There are also a few issues marked as `help wanted` [here](https://github.com/is
 
 ### Translations
 
-Currently, all of the translations in the extension are done by Google Translate and may be inaccurate. Pull requests fixing any incorrect translations are appreciated! The relevant files can be found in the `_locales` directory.
+- Brazilian Portuguese added by [@Gersonzao](https://github.com/Gersonzao)
+
+Currently, all other translations in the extension are done by Google Translate and may be inaccurate. Pull requests fixing any incorrect translations or adding new ones are appreciated! The relevant files can be found in the `_locales` directory.
 
 ## Donate
 
