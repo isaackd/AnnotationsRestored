@@ -1,0 +1,77 @@
+{
+	"name": {
+		"message": "Przywrócenie adnotacji dla YouTube™"
+	},
+	"shortName": {
+		"message": "Przywrócone adnotacje"
+	},
+	"description": {
+		"message": "Przywróć obsługę adnotacji w YouTube™!"
+	},
+
+	"statusTextNoVideo": {
+		"message": "Film nie jest odtwarzany"
+	},
+	"statusTextCheckingForVideo": {
+		"message": "Szukam adnotacji..."
+	},
+
+	"loadAnnotationText": {
+		"message": "Załaduj plik z adnotacjami"
+	},
+	"manageCacheText": {
+		"message": "Zarządzaj pamięcią podręczną"
+	},
+
+	"annotationCountSingular": {
+		"message": "Adnotacja"
+	},
+	"annotationCountPlural": {
+		"message": "Adnotacje"
+	},
+
+	"annotationTableType": {
+		"message": "Typ"
+	},
+	"annotationTableText": {
+		"message": "Tekst"
+	},
+	"annotationTableTime": {
+		"message": "Czas"
+	},
+
+	"annotationNoText": {
+		"message": "Bez tekstu"
+	},
+
+	"downloadButtonText": {
+		"message": "Pobierz"
+	},
+
+	"missingAnnotationsHeader": {
+		"message": "Hmm. Wygląda na to, że nie mamy żadnych adnotacji dla tego filmu"
+	},
+	"missingAnnotationsText1": {
+		"message": "Masz plik adnotacji dla tego filmu?"
+	},
+	"missingAnnotationsText2": {
+		"message": "Wyślij na adres email"
+	},
+
+	"donateButtonText": {
+		"message": "Kup mi kawę!"
+	},
+
+	"manageCacheHeader": {
+		"message": "Zarządzaj pamięcią podręczną Przywróconych adnotacji"
+	},
+	"manageCacheTotalSizeText": {
+		"message": "Całkowity rozmiar:"
+	},
+	"manageCacheOpenButtonText": {
+		"message": "Otwórz"
+	},
+	"manageCacheDeleteButtonText": {
+		"message": "Usuń"
+	}
+}
