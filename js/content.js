@@ -275,7 +275,7 @@ waitForElement(".ytp-panel-menu").then(el => {
 	annoSwitchPar.className = "ytp-menuitem";
 	annoSwitchPar.innerHTML = `
 	<div class="ytp-menuitem-icon"></div>
-	<div class="ytp-menuitem-label">Restore Annotations</div>
+	<div class="ytp-menuitem-label">Restore Old Annotations</div>
 	<div class="ytp-menuitem-content">
 		<div class="ytp-menuitem-toggle-checkbox">
 		<input type="checkbox" id="annotation-sneaky-switch" aria-hidden="true" style="position: absolute; left: -100vw;">
