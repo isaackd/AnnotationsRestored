@@ -4,6 +4,10 @@ On January 15 2019, YouTube decided to discontinue annotations. While the featur
 
 Annotations Restored fixes this by searching for any archived annotation files and displaying them if found.
 
+![Discord Logo](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)
+
+Join the Discord! https://discord.gg/v7xMm2r8wH
+
 ![Demonstration of Annotations Restored](https://github.com/isaackd/AnnotationsRestored/blob/master/demo.gif)
 
 ## Installation
