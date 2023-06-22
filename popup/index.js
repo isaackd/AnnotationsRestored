@@ -36,8 +36,8 @@ emailTextElement.textContent = " afrmtbl@gmail.com";
 
 emptySubtextElement.append(subtextOne, newlineElement, subtextTwo, emailTextElement);
 
-const extensionNameElement = document.getElementById("extension-name");
-extensionNameElement.textContent = browser.i18n.getMessage("shortName");
+// const extensionNameElement = document.getElementById("extension-name");
+// extensionNameElement.textContent = browser.i18n.getMessage("shortName");
 
 const coffeeTextElement = document.getElementById("coffee-text");
 coffeeTextElement.textContent = browser.i18n.getMessage("donateButtonText");

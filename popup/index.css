@@ -237,7 +237,8 @@ th, td {
 #footer {
 	display: flex;
 
-	justify-content: space-between;
+	justify-content: start;
+	gap: 1rem;
 	align-items: center;
 
 	bottom: 0;
@@ -258,7 +259,8 @@ th, td {
 	width: 20px;
 }
 
-#coffee-button {
+#coffee-button,
+#discord-button {
 	display: flex;
 	align-items: center;
 	padding: 0.6rem;
@@ -275,7 +277,8 @@ th, td {
 	background-color: #e3e3e3;
 }
 
-#coffee-button:hover {
+#coffee-button:hover,
+#discord-button:hover {
 	background-color: #dedede;
 }
 
@@ -283,7 +286,8 @@ th, td {
 	color: black;
 }
 
-#coffee-logo {
+#coffee-logo,
+#discord-logo {
 	width: 20px;
 }
 
