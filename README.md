@@ -46,6 +46,7 @@ Install from [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/an
 * [SomeGuy Automatic Mario](https://www.youtube.com/watch?v=94tVUfUdCFs)
 * [TLOC3 \*SPECIAL EDITION\* Now with Creators' Annotations](https://www.youtube.com/watch?v=rf5ngNUN2yo)
 * [Pop-Up Coin-Op: Space Invaders](https://www.youtube.com/watch?v=VP2T3YlTDG8)
+* [Super Paper Mario](https://www.youtube.com/watch?v=urTFIWUacmw)
 
 Check out the [wiki for more](https://github.com/isaackd/AnnotationsRestored/wiki/List-of-videos-with-annotations).
 
